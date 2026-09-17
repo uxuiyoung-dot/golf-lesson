@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GOLF LESSON — 왕초보에서 90타 깨기까지</title>
+<meta name="description" content="골프 입문부터 90타 깨기까지. 두 권의 교재를 하나로 담은 골프 레슨 디자인 시스템." />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<style>
+  :root{
+    --green-900:#0e2419;
+    --green:#1b3a2b;
+    --green-600:#2e5d3f;
+    --green-500:#3a7150;
+    --green-tint:#eef2ec;
+    --green-tint2:#e3ebe2;
+    --gold:#c6a15b;
+    --gold-soft:#d9bd86;
+    --paper:#f7f5ef;
+    --side:#fbfaf5;
+    --ink:#17201a;
+    --ink-soft:#525a52;
+    --ink-mute:#8a9088;
+    --line:rgba(23,32,26,.12);
+    --line-soft:rgba(23,32,26,.07);
+    --white:#ffffff;
+    --shadow:0 18px 50px -26px rgba(14,36,25,.4);
+    --font:'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', sans-serif;
+    --sbw:270px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--font);background:var(--paper);color:var(--ink);line-height:1.7;
+    -webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+  img{max-width:100%}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit}
+  ::selection{background:var(--green);color:var(--gold-soft)}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-thumb{background:rgba(23,32,26,.18);border-radius:10px;border:3px solid transparent;background-clip:content-box}
+  ::-webkit-scrollbar-thumb:hover{background:rgba(23,32,26,.32);background-clip:content-box}
+
+  /* ---------------- SIDEBAR ---------------- */
+  .sidebar{position:fixed;left:0;top:0;bottom:0;width:var(--sbw);background:var(--side);
+    border-right:1px solid var(--line);display:flex;flex-direction:column;z-index:60;transition:transform .38s cubic-bezier(.16,1,.3,1)}
+  .side-head{display:flex;align-items:center;gap:11px;padding:22px 22px 16px}
+  .side-head .mark{width:34px;height:34px;border-radius:9px;background:var(--green);color:var(--gold-soft);
+    display:grid;place-items:center;font-weight:900;font-size:1.05rem;flex:none;box-shadow:0 6px 16px -8px rgba(27,58,43,.7)}
+  .side-head .tt{font-weight:900;font-size:.98rem;letter-spacing:-.02em;line-height:1.1}
+  .side-head .tt small{display:block;font-size:.62rem;letter-spacing:.16em;color:var(--gold);font-weight:800;
+    text-transform:uppercase;margin-top:2px}
+  .side-search{padding:4px 18px 14px}
+  .side-search .box{display:flex;align-items:center;gap:9px;background:var(--white);border:1px solid var(--line);
+    border-radius:10px;padding:10px 13px;transition:border-color .25s,box-shadow .25s}
+  .side-search .box:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px rgba(198,161,91,.16)}
+  .side-search input{border:none;outline:none;background:none;font-family:inherit;font-size:.86rem;width:100%;color:var(--ink)}
+  .side-search .ic{opacity:.45;font-size:.9rem}
+  .tree{flex:1;overflow-y:auto;padding:6px 12px 20px}
+  .tgroup{margin-bottom:4px}
+  .thead{display:flex;align-items:center;gap:9px;width:100%;background:none;border:none;cursor:pointer;
+    padding:11px 12px;border-radius:9px;color:var(--ink);font-weight:800;font-size:.82rem;letter-spacing:-.01em;
+    transition:background .2s}
+  .thead:hover{background:var(--green-tint)}
+  .thead .gi{width:22px;height:22px;border-radius:6px;background:var(--green-tint2);display:grid;place-items:center;
+    font-size:.72rem;color:var(--green-600);flex:none}
+  .thead .chev{margin-left:auto;font-size:.68rem;color:var(--ink-mute);transition:transform .3s}
+  .tgroup.open .thead .chev{transform:rotate(90deg)}
+  .titems{max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(.16,1,.3,1)}
+  .tgroup.open .titems{max-height:640px}
+  .tlink{display:flex;align-items:center;gap:9px;padding:8px 12px 8px 42px;font-size:.87rem;color:var(--ink-soft);
+    cursor:pointer;border-radius:8px;position:relative;transition:color .2s,background .2s;font-weight:500}
+  .tlink::before{content:"";position:absolute;left:24px;top:50%;transform:translateY(-50%);width:5px;height:5px;
+    border-radius:50%;background:var(--line);transition:background .2s,transform .2s}
+  .tlink:hover{color:var(--ink);background:var(--green-tint)}
+  .tlink.active{color:var(--green);font-weight:700;background:var(--green-tint)}
+  .tlink.active::before{background:var(--gold);transform:translateY(-50%) scale(1.5)}
+  .tlink .cnt{margin-left:auto;font-size:.68rem;color:var(--ink-mute);font-weight:700;background:var(--green-tint2);
+    padding:1px 7px;border-radius:99px}
+  .tlink.active .cnt{background:var(--gold);color:var(--green-900)}
+  .side-foot{padding:14px 22px;border-top:1px solid var(--line-soft);font-size:.7rem;color:var(--ink-mute);line-height:1.7}
+  .side-foot b{color:var(--ink-soft);font-weight:800}
+
+  /* ---------------- MAIN ---------------- */
+  .main{margin-left:var(--sbw);min-height:100vh;display:flex;flex-direction:column}
+  .topbar{position:sticky;top:0;z-index:40;height:60px;display:flex;align-items:center;gap:14px;
+    padding:0 clamp(18px,4vw,44px);background:rgba(247,245,239,.85);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line)}
+  .hamb{display:none;background:none;border:1px solid var(--line);border-radius:8px;width:38px;height:38px;
+    cursor:pointer;font-size:1.1rem;color:var(--ink);align-items:center;justify-content:center}
+  .crumb{font-size:.76rem;color:var(--ink-mute);font-weight:600;letter-spacing:.02em}
+  .crumb b{color:var(--ink);font-weight:800}
+  .crumb .sep{margin:0 8px;opacity:.5}
+  .top-spacer{flex:1}
+  .top-cta{font-size:.76rem;color:var(--ink-soft);font-weight:700;border:1px solid var(--line);border-radius:99px;
+    padding:8px 16px;background:var(--white);cursor:pointer;transition:all .25s;display:flex;gap:7px;align-items:center}
+  .top-cta:hover{border-color:var(--gold);color:var(--green)}
+
+  .content{flex:1;padding:clamp(26px,4vw,52px) clamp(18px,4vw,44px) 100px;max-width:1080px;width:100%}
+  .view{display:none;animation:fade .45s cubic-bezier(.16,1,.3,1)}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  /* view headers */
+  .vhead{margin-bottom:38px}
+  .vtag{display:inline-flex;align-items:center;gap:9px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--gold);font-weight:800;margin-bottom:14px}
+  .vtag .l{width:24px;height:1px;background:var(--gold);opacity:.6}
+  .vtitle{font-size:clamp(1.8rem,4vw,2.9rem);font-weight:900;letter-spacing:-.03em;line-height:1.08}
+  .vlead{font-size:clamp(1rem,1.6vw,1.14rem);color:var(--ink-soft);max-width:680px;margin-top:16px;font-weight:500}
+  .vsub{font-size:1.3rem;font-weight:800;letter-spacing:-.02em;margin:52px 0 4px}
+  .vp{color:var(--ink-soft);max-width:720px;margin-top:14px;font-weight:500}
+
+  /* ---------- HOME ---------- */
+  .hero{position:relative;overflow:hidden;border-radius:22px;padding:clamp(34px,5vw,60px);color:var(--paper);
+    background:radial-gradient(120% 120% at 82% -20%,rgba(58,113,80,.6),transparent 58%),
+      radial-gradient(90% 80% at 6% 120%,rgba(198,161,91,.18),transparent 55%),
+      linear-gradient(155deg,var(--green-900),var(--green) 58%,#12301f);}
+  .hero .grain{position:absolute;inset:0;opacity:.5;pointer-events:none;
+    background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:3px 3px}
+  .hero .ball{position:absolute;right:-6%;top:50%;transform:translateY(-50%);width:min(38%,340px);aspect-ratio:1;border-radius:50%;
+    background:radial-gradient(circle at 34% 30%,#fff,#e8e3d4 46%,#c3bda9 78%,#9a9481);
+    box-shadow:inset -22px -26px 54px rgba(0,0,0,.28),0 30px 70px -26px rgba(0,0,0,.6);opacity:.9;animation:float 7s ease-in-out infinite}
+  .hero .ball::after{content:"";position:absolute;inset:0;border-radius:50%;opacity:.5;
+    background-image:radial-gradient(circle,rgba(0,0,0,.1) 1.4px,transparent 2px);background-size:22px 22px;background-position:center;
+    -webkit-mask-image:radial-gradient(circle,#000 62%,transparent 72%);mask-image:radial-gradient(circle,#000 62%,transparent 72%)}
+  @keyframes float{0%,100%{transform:translateY(-52%)}50%{transform:translateY(-46%)}}
+  .hero-in{position:relative;z-index:2;max-width:600px}
+  .hero .eye{display:inline-flex;align-items:center;gap:10px;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--gold-soft);font-weight:700;margin-bottom:20px}
+  .hero .eye .l{width:34px;height:1px;background:var(--gold-soft);opacity:.7}
+  .hero h1{font-size:clamp(2.4rem,6vw,4.2rem);line-height:.94;font-weight:900;letter-spacing:-.04em;color:#fff}
+  .hero h1 em{font-style:normal;color:var(--gold);display:block}
+  .hero p{margin-top:20px;font-size:clamp(1rem,1.8vw,1.2rem);color:rgba(247,245,239,.9);font-weight:500;line-height:1.5}
+  .hero p b{color:var(--gold-soft);font-weight:700}
+
+  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}
+  .stat{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .stat .n{font-size:clamp(1.7rem,3vw,2.3rem);font-weight:900;color:var(--green);line-height:1;
+    font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+  .stat .n span{color:var(--gold);font-size:.5em;margin-left:2px}
+  .stat .t{margin-top:10px;font-size:.84rem;color:var(--ink-soft);font-weight:600}
+
+  .entry-row{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+  .entry{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:18px;padding:28px;cursor:pointer;
+    background:var(--white);transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s,border-color .3s;text-align:left}
+  .entry:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:rgba(198,161,91,.5)}
+  .entry .ico{width:52px;height:52px;border-radius:13px;display:grid;place-items:center;font-size:1.5rem;margin-bottom:18px;
+    background:var(--green-tint)}
+  .entry h3{font-size:1.2rem;font-weight:800;letter-spacing:-.02em}
+  .entry .en{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:800;margin-top:3px}
+  .entry p{font-size:.9rem;color:var(--ink-soft);margin-top:12px;font-weight:500}
+  .entry .go{margin-top:18px;font-size:.82rem;font-weight:800;color:var(--green);display:flex;align-items:center;gap:7px}
+  .entry .go .ar{transition:transform .3s}
+  .entry:hover .go .ar{transform:translateX(5px)}
+
+  /* ---------- generic cards ---------- */
+  .grid{display:grid;gap:16px;margin-top:26px}
+  .g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+  .card{background:var(--white);border:1px solid var(--line);border-radius:15px;padding:24px;position:relative;
+    transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s,border-color .3s}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:rgba(198,161,91,.45)}
+  .card .kn{font-size:.68rem;font-weight:800;letter-spacing:.12em;color:var(--gold);text-transform:uppercase}
+  .card h4{font-size:1.1rem;font-weight:800;margin:9px 0 7px;letter-spacing:-.02em}
+  .card p{font-size:.9rem;color:var(--ink-soft);font-weight:500}
+  .card .em{position:absolute;right:18px;top:16px;font-size:1.5rem;opacity:.5}
+  .course .card{display:flex;gap:16px;align-items:flex-start}
+  .course .badge{flex:none;width:40px;height:40px;border-radius:50%;background:var(--green);color:var(--gold-soft);
+    display:grid;place-items:center;font-weight:800}
+
+  /* par */
+  .par-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+  .par{border:1px solid var(--line);border-radius:15px;padding:26px;background:var(--white);position:relative;overflow:hidden}
+  .par::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--gold)}
+  .par .p{font-size:.72rem;letter-spacing:.14em;color:var(--gold);font-weight:800;text-transform:uppercase}
+  .par .big{font-size:2.3rem;font-weight:900;color:var(--green);letter-spacing:-.03em;margin:5px 0}
+  .par .dist{font-size:.86rem;color:var(--ink-soft);font-weight:700}
+  .par .desc{font-size:.84rem;color:var(--ink-soft);margin-top:10px}
+  .formula{margin-top:26px;padding:22px 26px;border:1px dashed rgba(198,161,91,.6);border-radius:15px;
+    background:rgba(198,161,91,.08);font-weight:700;color:var(--green);font-size:1rem;text-align:center}
+  .formula b{color:var(--gold);font-weight:900}
+
+  /* clubs */
+  .club-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+  .club{background:var(--white);border:1px solid var(--line);border-radius:15px;padding:28px;text-align:center;
+    transition:transform .4s,box-shadow .4s}
+  .club:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .club .cn{font-size:.82rem;font-weight:800;letter-spacing:.14em;color:var(--gold);margin-bottom:14px;
+    font-variant-numeric:tabular-nums}
+  .club h4{font-size:1.2rem;font-weight:800}
+  .club .en{font-size:.72rem;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin:3px 0 11px;font-weight:800}
+  .club p{font-size:.88rem;color:var(--ink-soft)}
+
+  /* ladder */
+  .ladder{display:flex;gap:9px;margin-top:26px;flex-wrap:wrap}
+  .ladder .step{flex:1;min-width:110px;border-radius:13px;padding:20px 16px;color:#fff;text-align:center;transition:transform .35s}
+  .ladder .step:hover{transform:translateY(-5px)}
+  .ladder .step .s{font-size:.68rem;letter-spacing:.08em;opacity:.85;font-weight:700}
+  .ladder .step .name{font-size:1.08rem;font-weight:800;margin:5px 0 2px}
+  .ladder .step .v{font-size:1.4rem;font-weight:900;font-variant-numeric:tabular-nums}
+
+  /* glossary */
+  .gloss-search{margin-top:26px;max-width:520px}
+  .isearch{display:flex;align-items:center;gap:10px;background:var(--white);border:1px solid var(--line);border-radius:99px;
+    padding:12px 20px;transition:border-color .25s,box-shadow .25s}
+  .isearch:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px rgba(198,161,91,.16)}
+  .isearch input{border:none;outline:none;background:none;font-family:inherit;font-size:.94rem;width:100%;color:var(--ink)}
+  .isearch .ic{opacity:.45}
+  .gloss-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);
+    border-radius:15px;overflow:hidden;margin-top:22px}
+  .term{background:var(--paper);padding:20px 22px;transition:background .25s}
+  .term:hover{background:var(--white)}
+  .term .k{font-weight:800;font-size:.98rem;color:var(--green)}
+  .term .en{font-size:.7rem;color:var(--gold);letter-spacing:.05em;font-weight:800;text-transform:uppercase;margin-left:6px}
+  .term .d{font-size:.85rem;color:var(--ink-soft);margin-top:6px;font-weight:500}
+  .no-res{grid-column:1/-1;background:var(--paper);padding:40px;text-align:center;color:var(--ink-soft)}
+
+  /* etiquette */
+  .etq{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:26px}
+  .etq .card h4{display:flex;align-items:center;gap:10px}
+  .etq .card h4 .qn{width:28px;height:28px;border-radius:8px;background:rgba(198,161,91,.18);color:var(--gold);
+    display:grid;place-items:center;font-size:.8rem;font-weight:800;flex:none}
+
+  /* swing stepper */
+  .stepper{margin-top:26px}
+  .step-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+  .step-tab{border:1px solid var(--line);background:var(--white);color:var(--ink-soft);border-radius:99px;
+    padding:10px 18px;font-family:inherit;font-weight:700;font-size:.84rem;cursor:pointer;transition:all .28s;
+    display:flex;align-items:center;gap:8px}
+  .step-tab .num{font-size:.7rem;color:var(--gold);font-weight:800}
+  .step-tab:hover{border-color:var(--gold);color:var(--ink)}
+  .step-tab.active{background:var(--green);color:var(--paper);border-color:var(--green)}
+  .step-tab.active .num{color:var(--gold-soft)}
+  .step-panel{display:none}
+  .step-panel.active{display:grid;grid-template-columns:.9fr 1.1fr;gap:36px;align-items:center;animation:fade .45s ease}
+  .step-visual{aspect-ratio:4/3;border-radius:16px;position:relative;overflow:hidden;
+    background:radial-gradient(120% 120% at 70% 10%,rgba(198,161,91,.25),transparent 55%),linear-gradient(155deg,#12301f,#0e2419);
+    display:grid;place-items:center}
+  .step-visual .bignum{font-size:8rem;font-weight:900;color:rgba(198,161,91,.16);position:absolute;right:14px;bottom:-12px}
+  .step-visual .stage{font-size:1.4rem;font-weight:900;color:var(--gold-soft);z-index:2;text-align:center}
+  .step-visual .stage small{display:block;font-size:.72rem;letter-spacing:.2em;color:rgba(247,245,239,.5);
+    text-transform:uppercase;margin-top:7px;font-weight:600}
+  .step-body h3{font-size:1.4rem;font-weight:900;margin-bottom:12px}
+  .step-body>p{color:var(--ink-soft);font-size:.98rem;margin-bottom:12px;font-weight:500}
+  .step-body ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin-top:8px}
+  .step-body li{position:relative;padding-left:24px;color:var(--ink-soft);font-size:.92rem;font-weight:500}
+  .step-body li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+
+  /* tips */
+  .tips-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:24px}
+  .tips-count{font-size:.86rem;color:var(--ink-soft);font-weight:600}
+  .tips-count b{color:var(--green)}
+  .tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+  .tip{background:var(--white);border:1px solid var(--line);border-radius:15px;padding:24px;cursor:pointer;
+    transition:transform .42s cubic-bezier(.16,1,.3,1),box-shadow .42s,border-color .3s;display:flex;flex-direction:column}
+  .tip:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:rgba(198,161,91,.45)}
+  .tip.hide{display:none}
+  .tip-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .tip .num{font-size:.86rem;font-weight:900;color:var(--gold);font-variant-numeric:tabular-nums}
+  .tip .cat{font-size:.64rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;padding:3px 9px;border-radius:99px}
+  .tip h4{font-size:1.06rem;font-weight:800;letter-spacing:-.02em;line-height:1.35}
+  .tip .body{font-size:.88rem;color:var(--ink-soft);font-weight:500;max-height:0;overflow:hidden;opacity:0;
+    transition:max-height .5s ease,opacity .4s,margin .4s}
+  .tip.open .body{max-height:420px;opacity:1;margin-top:13px}
+  .tip .more{margin-top:auto;padding-top:15px;font-size:.76rem;font-weight:800;color:var(--gold);display:flex;align-items:center;gap:6px}
+  .tip .more .chev{transition:transform .38s}
+  .tip.open .more .chev{transform:rotate(90deg)}
+  .cat-a{background:#2e5d3f}.cat-b{background:#b5843a}.cat-c{background:#3a6b8a}.cat-d{background:#8a5a3a}.cat-e{background:#6a4a7a}
+
+  /* search results */
+  .sr-group{margin-top:30px}
+  .sr-group h3{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);font-weight:800;margin-bottom:12px}
+  .sr-item{display:block;width:100%;text-align:left;background:var(--white);border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;margin-bottom:10px;cursor:pointer;transition:border-color .25s,transform .25s}
+  .sr-item:hover{border-color:var(--gold);transform:translateX(4px)}
+  .sr-item .rt{font-weight:800;font-size:.98rem}
+  .sr-item .rt .badge{font-size:.64rem;font-weight:800;color:#fff;padding:2px 8px;border-radius:99px;margin-left:8px;vertical-align:middle}
+  .sr-item .rd{font-size:.85rem;color:var(--ink-soft);margin-top:5px;font-weight:500}
+  .sr-empty{color:var(--ink-soft);margin-top:24px}
+
+  /* overlay */
+  .overlay{position:fixed;inset:0;background:rgba(14,36,25,.4);backdrop-filter:blur(2px);z-index:55;opacity:0;
+    pointer-events:none;transition:opacity .35s}
+  .overlay.show{opacity:1;pointer-events:auto}
+
+  /* ---------- DASHBOARD (home) ---------- */
+  .dash{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+  .hero-span{grid-column:1/-1}
+  .span7{grid-column:span 7}.span5{grid-column:span 5}.span6{grid-column:span 6}
+  .w{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:24px;position:relative;
+    display:flex;flex-direction:column;transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s,border-color .3s}
+  .w-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .w-head h3{font-size:1rem;font-weight:800;letter-spacing:-.02em}
+  .w-head .act{font-size:.74rem;color:var(--gold);font-weight:800;cursor:pointer;background:none;border:none;padding:0;transition:opacity .2s}
+  .w-head .act:hover{opacity:.65}
+  .w-head .cnt-b{font-size:.7rem;font-weight:800;color:var(--ink-mute);background:var(--green-tint2);padding:2px 9px;border-radius:99px}
+  .hero-quick{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap;position:relative;z-index:2}
+  .hero-quick button{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:var(--paper);
+    border-radius:99px;padding:10px 18px;font-family:inherit;font-weight:700;font-size:.84rem;cursor:pointer;transition:all .25s}
+  .hero-quick button:hover{background:var(--gold);color:var(--green-900);border-color:var(--gold)}
+
+  .w.kpi{grid-column:span 3;min-height:120px;justify-content:space-between}
+  .w.kpi:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:rgba(198,161,91,.4)}
+  .w.kpi .n{font-size:2.3rem;font-weight:900;color:var(--green);line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+  .w.kpi .n span{color:var(--gold);font-size:.5em;margin-left:2px}
+  .w.kpi .t{font-size:.82rem;color:var(--ink-soft);font-weight:700;margin-top:8px}
+  .w.kpi .ki{position:absolute;right:18px;top:16px;color:var(--green-500);opacity:.6}
+
+  .catrow{display:flex;align-items:center;gap:12px;padding:12px 0;cursor:pointer;border-bottom:1px solid var(--line-soft)}
+  .catrow:last-child{border-bottom:none}
+  .catrow .dot{width:9px;height:9px;border-radius:3px;flex:none}
+  .catrow .cn{font-weight:700;font-size:.92rem;min-width:78px;transition:color .2s}
+  .catrow .bar{flex:1;height:7px;border-radius:99px;background:var(--green-tint2);overflow:hidden}
+  .catrow .bar i{display:block;height:100%;border-radius:99px;transition:width .6s cubic-bezier(.16,1,.3,1)}
+  .catrow .cc{font-weight:800;font-size:.84rem;color:var(--ink-soft);min-width:26px;text-align:right}
+  .catrow .go{color:var(--ink-mute);font-size:.8rem;transition:transform .25s,color .2s}
+  .catrow:hover .cn{color:var(--green)}
+  .catrow:hover .go{transform:translateX(3px);color:var(--gold)}
+
+  .tip-w{background:linear-gradient(160deg,#12301f,#0e2419);border-color:transparent;color:var(--paper)}
+  .tip-w .w-head h3{color:#fff}
+  .tip-w .reroll{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:var(--gold-soft);
+    width:32px;height:32px;border-radius:9px;cursor:pointer;font-size:.95rem;transition:all .25s}
+  .tip-w .reroll:hover{background:var(--gold);color:var(--green-900);border-color:var(--gold);transform:rotate(90deg)}
+  .tip-w .tnum{font-size:.82rem;font-weight:900;color:var(--gold);display:flex;align-items:center;gap:9px;margin-bottom:10px}
+  .tip-w .tbadge{font-size:.62rem;font-weight:800;color:#fff;padding:3px 9px;border-radius:99px;letter-spacing:.04em}
+  .tip-w h4{font-size:1.2rem;font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1.35}
+  .tip-w p{font-size:.9rem;color:rgba(247,245,239,.78);margin-top:10px;font-weight:500;
+    display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+  .tip-w .tgo{margin-top:16px;align-self:flex-start;background:none;border:none;color:var(--gold-soft);
+    font-weight:800;font-size:.82rem;cursor:pointer;padding:0;transition:transform .25s}
+  .tip-w .tgo:hover{transform:translateX(4px)}
+
+  .swtl{display:flex;flex-wrap:wrap;gap:8px}
+  .swnode{flex:1;min-width:74px;border:1px solid var(--line);border-radius:11px;padding:13px 8px;text-align:center;
+    cursor:pointer;transition:all .28s;background:var(--paper)}
+  .swnode:hover{border-color:var(--gold);background:var(--green-tint);transform:translateY(-3px)}
+  .swnode .sn{font-size:.68rem;color:var(--gold);font-weight:800}
+  .swnode .sl{font-size:.82rem;font-weight:700;margin-top:4px;letter-spacing:-.02em}
+
+  .gchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .gchip{font-size:.82rem;padding:7px 14px;border:1px solid var(--line);border-radius:99px;cursor:pointer;
+    background:var(--paper);font-weight:600;transition:all .25s}
+  .gchip:hover{border-color:var(--gold);color:var(--green);background:var(--green-tint)}
+
+  .mini-ladder{display:flex;gap:6px}
+  .ml{flex:1;border-radius:11px;padding:14px 6px;text-align:center;color:#fff}
+  .ml .mn{font-size:.72rem;font-weight:700;opacity:.9}
+  .ml .mv{font-size:1.05rem;font-weight:900;margin-top:2px;font-variant-numeric:tabular-nums}
+
+  /* icons */
+  .ic svg{display:block}
+  .side-search .ic svg,.isearch .ic svg{width:16px;height:16px}
+  .gi svg{width:14px;height:14px;color:var(--green-600)}
+  .w.kpi .ki svg{width:22px;height:22px}
+  .reroll svg{width:15px;height:15px}
+  .top-cta svg{width:15px;height:15px}
+  .hamb svg{width:18px;height:18px}
+
+  /* responsive */
+  @media(max-width:1080px){
+    .dash .span7,.dash .span5,.dash .span6{grid-column:1/-1}
+    .w.kpi{grid-column:span 6}
+  }
+  @media(max-width:1000px){
+    .g3,.gloss-grid,.tips-grid,.entry-row,.club-row{grid-template-columns:repeat(2,1fr)}
+    .stat-row{grid-template-columns:repeat(2,1fr)}
+    .step-panel.active{grid-template-columns:1fr;gap:22px}
+    .par-wrap{grid-template-columns:1fr}
+  }
+  @media(max-width:820px){
+    :root{--sbw:280px}
+    .sidebar{transform:translateX(-100%);box-shadow:var(--shadow)}
+    .sidebar.open{transform:none}
+    .main{margin-left:0}
+    .hamb{display:inline-flex}
+    .hero .ball{opacity:.4}
+  }
+  @media(max-width:560px){
+    .g3,.g2,.gloss-grid,.tips-grid,.entry-row,.club-row,.etq,.stat-row{grid-template-columns:1fr}
+    .w.kpi{grid-column:1/-1}
+    .top-cta{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="overlay" id="overlay"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="side-head">
+    <div class="mark">G</div>
+    <div class="tt">GOLF LESSON<small>90타 깨기까지</small></div>
+  </div>
+  <div class="side-search">
+    <div class="box"><span class="ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4"/></svg></span><input id="globalSearch" type="text" placeholder="검색 — 비결, 용어, 규칙" aria-label="검색" /></div>
+  </div>
+  <nav class="tree" id="tree"></nav>
+  <div class="side-foot">
+    <b>GOLF LESSON</b> · Ver 1.0<br>골프교재 1 &amp; 2 아카이브
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <header class="topbar">
+    <button class="hamb" id="hamb" aria-label="메뉴"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3.5 6h13M3.5 10h13M3.5 14h13"/></svg></button>
+    <div class="crumb" id="crumb"></div>
+    <div class="top-spacer"></div>
+    <button class="top-cta" id="randomTip"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 8A6 6 0 0 0 5 6"/><path d="M4.5 12A6 6 0 0 0 15 14"/><path d="M15 3v3h-3"/><path d="M5 17v-3h3"/></svg>오늘의 비결</button>
+  </header>
+
+  <div class="content" id="content">
+    <!-- HOME (DASHBOARD) -->
+    <section class="view active" data-view="home">
+      <div class="dash">
+        <!-- hero -->
+        <div class="hero hero-span">
+          <div class="grain"></div><div class="ball" aria-hidden="true"></div>
+          <div class="hero-in">
+            <span class="eye"><span class="l"></span>왕초보에서 90타 깨기까지</span>
+            <h1>GOLF<em>DASHBOARD</em></h1>
+            <p>골프 입문부터 <b>90타의 벽</b>을 넘는 순간까지. 필요한 곳으로 바로 이동하세요.</p>
+            <div class="hero-quick">
+              <button data-go="history">입문 시작</button>
+              <button data-go="tips-a">90타 비결</button>
+              <button data-go="glossary">용어 사전</button>
+              <button data-go="swing">스윙 7단계</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI -->
+        <div class="w kpi"><span class="ki"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M10 5.5S8.5 4 5 4v10c3.5 0 5 1.5 5 1.5"/><path d="M10 5.5S11.5 4 15 4v10c-3.5 0-5 1.5-5 1.5"/></svg></span><div class="n" data-count="2">0</div><div class="t">교재</div></div>
+        <div class="w kpi"><span class="ki"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 3v14"/><path d="M5.5 4h8l-1.8 2.8L13.5 10h-8"/></svg></span><div class="n" data-count="97">0</div><div class="t">실전 비결</div></div>
+        <div class="w kpi"><span class="ki"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M7.5 5h9M7.5 10h9M7.5 15h9"/><circle cx="4" cy="5" r="1"/><circle cx="4" cy="10" r="1"/><circle cx="4" cy="15" r="1"/></svg></span><div class="n" data-count="52">0</div><div class="t">용어·규칙</div></div>
+        <div class="w kpi"><span class="ki"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15.5l3.5-4L10 14l4-6.5L17 10"/></svg></span><div class="n" data-count="7">0</div><div class="t">스윙 단계</div></div>
+
+        <!-- category module -->
+        <div class="w span7">
+          <div class="w-head"><h3>부문별 90타 비결</h3><span class="cnt-b">전체 97</span></div>
+          <div id="dashCats"></div>
+        </div>
+
+        <!-- today's tip -->
+        <div class="w tip-w span5">
+          <div class="w-head"><h3>오늘의 비결</h3><button class="reroll" id="rerollTip" aria-label="다른 비결"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 8A6 6 0 0 0 5 6"/><path d="M4.5 12A6 6 0 0 0 15 14"/><path d="M15 3v3h-3"/><path d="M5 17v-3h3"/></svg></button></div>
+          <div id="dashTip"></div>
+        </div>
+
+        <!-- swing timeline -->
+        <div class="w span7">
+          <div class="w-head"><h3>스윙 7단계</h3><button class="act" data-go="swing">전체 보기 →</button></div>
+          <div class="swtl" id="dashSwing"></div>
+        </div>
+
+        <!-- glossary quick -->
+        <div class="w span5">
+          <div class="w-head"><h3>용어 빠른 검색</h3><button class="act" data-go="glossary">사전 →</button></div>
+          <label class="isearch"><span class="ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4"/></svg></span><input id="dashGloss" type="text" placeholder="용어 입력 후 Enter" aria-label="용어 빠른 검색" /></label>
+          <div class="gchips">
+            <span class="gchip" data-glo="그립">그립</span><span class="gchip" data-glo="OB">OB</span>
+            <span class="gchip" data-glo="벙커">벙커</span><span class="gchip" data-glo="드롭">드롭</span>
+            <span class="gchip" data-glo="홀인원">홀인원</span><span class="gchip" data-glo="해저드">해저드</span>
+          </div>
+        </div>
+
+        <!-- course quick -->
+        <div class="w span6">
+          <div class="w-head"><h3>코스 구성 8요소</h3><button class="act" data-go="course">자세히 →</button></div>
+          <div class="gchips">
+            <span class="gchip" data-go="course">티잉 그라운드</span><span class="gchip" data-go="course">페어웨이</span>
+            <span class="gchip" data-go="course">러프</span><span class="gchip" data-go="course">크로스벙커</span>
+            <span class="gchip" data-go="course">가드벙커</span><span class="gchip" data-go="course">워터 해저드</span>
+            <span class="gchip" data-go="course">그린</span><span class="gchip" data-go="course">홀</span>
+          </div>
+        </div>
+
+        <!-- score ladder -->
+        <div class="w span6">
+          <div class="w-head"><h3>스코어 한눈에</h3><button class="act" data-go="glossary">용어 →</button></div>
+          <div class="mini-ladder">
+            <div class="ml" style="background:#8a3a3a"><div class="mn">더블보기</div><div class="mv">+2</div></div>
+            <div class="ml" style="background:#a5603a"><div class="mn">보기</div><div class="mv">+1</div></div>
+            <div class="ml" style="background:#5a6a4a"><div class="mn">파</div><div class="mv">0</div></div>
+            <div class="ml" style="background:#3a6b8a"><div class="mn">버디</div><div class="mv">−1</div></div>
+            <div class="ml" style="background:#2e5d3f"><div class="mn">이글</div><div class="mv">−2</div></div>
+            <div class="ml" style="background:#c6a15b;color:#0e2419"><div class="mn">더블이글</div><div class="mv">−3</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section class="view" data-view="history">
+      <div class="vhead"><span class="vtag"><span class="l"></span>PART I · 입문</span><h2 class="vtitle">골프의 역사</h2>
+        <p class="vlead">15세기 스코틀랜드에서 시작되어 1900년 원산 세관 6홀 코스로 우리나라에 처음 소개된 골프. 그 뿌리와 오늘을 살펴봅니다.</p></div>
+      <div class="grid g3">
+        <div class="card"><span class="kn">History</span><h4>골프의 유래</h4><p>스코틀랜드 목동이 돌을 치던 놀이에서 출발했다는 설이 유력합니다. 15세기 영국 전역에 보급, 1888년 미국으로 건너가 1958년 세계골프연맹(WAGC)이 뉴욕에 설립되었습니다.</p></div>
+        <div class="card"><span class="kn">Korea</span><h4>한국 골프의 효시</h4><p>1900년 구한말, 원산 바닷가 세관 구내에 영국인들이 만든 6홀 코스가 시작이었습니다. 1919년 효창공원 9홀, 1924년 청량리 코스로 이어졌습니다.</p></div>
+        <div class="card"><span class="kn">Today</span><h4>300만 골프 인구</h4><p>국내 골프 인구는 약 300만, 연간 골프장 내장객은 1,000만 명을 넘습니다. 단일 스포츠로는 비교하기 힘든 규모입니다.</p></div>
+      </div>
+      <h3 class="vsub">승리의 조건</h3>
+      <p class="vp">14개 이하의 클럽(우드·아이언·퍼터)으로 18홀을 도는 1라운드 동안, 가장 적은 타수를 기록한 사람이 이깁니다. 다른 경기와 달리 핸디캡 제도가 있어, 수가 많을수록 초보자·적을수록 고단자입니다.</p>
+    </section>
+
+    <!-- COURSE -->
+    <section class="view" data-view="course">
+      <div class="vhead"><span class="vtag"><span class="l"></span>PART I · 입문</span><h2 class="vtitle">코스의 8가지 구성 요소</h2>
+        <p class="vlead">티잉 그라운드에서 시작해 홀컵으로 끝나는 한 홀. 그 사이를 채우는 지형과 장애물을 알면 코스가 읽힙니다.</p></div>
+      <div class="grid g2 course">
+        <div class="card"><div class="badge">1</div><div><h4>티잉 그라운드</h4><p>매 홀 첫 샷을 날리는 지역. 흰색은 대회용(백티), 노란색은 일반 남성용(레귤러), 붉은색은 여성용(레이디 티)입니다.</p></div></div>
+        <div class="card"><div class="badge">2</div><div><h4>워터 해저드</h4><p>코스 안의 호수·연못·습지·냇물 등 의도적으로 설계된 장애물. 황색 말뚝/선으로 경계를 표시합니다.</p></div></div>
+        <div class="card"><div class="badge">3</div><div><h4>페어웨이</h4><p>티잉 그라운드에서 그린까지 이어지는, 잔디를 짧게 깎은 지역. 모든 골퍼가 티샷을 이곳에 떨어뜨리려 합니다.</p></div></div>
+        <div class="card"><div class="badge">4</div><div><h4>러프</h4><p>잔디를 길게 남긴 지역. 2~3인치면 쇼트 러프, 4~6인치면 깊은 러프. 샷을 하기가 까다롭습니다.</p></div></div>
+        <div class="card"><div class="badge">5</div><div><h4>크로스벙커</h4><p>페어웨이를 가로질러 길게 늘어선 벙커. 이곳에 떨어지면 비거리를 내기 어렵습니다.</p></div></div>
+        <div class="card"><div class="badge">6</div><div><h4>가드벙커</h4><p>그린 주변에 배치된 움푹 팬 모래 웅덩이. 대부분의 골퍼가 긴장하며 미스샷이 속출하는 곳입니다.</p></div></div>
+        <div class="card"><div class="badge">7</div><div><h4>그린</h4><p>잔디를 가장 짧게 깎아 볼이 매끄럽고 빠르게 굴러가는, 홀컵이 있는 지역입니다.</p></div></div>
+        <div class="card"><div class="badge">8</div><div><h4>홀</h4><p>직경 108mm, 깊이 100mm 이상. 무게 45.93g, 직경 42.67mm의 볼을 이 작은 원통에 넣어야 한 홀이 끝납니다.</p></div></div>
+      </div>
+    </section>
+
+    <!-- PLAY -->
+    <section class="view" data-view="play">
+      <div class="vhead"><span class="vtag"><span class="l"></span>PART I · 입문</span><h2 class="vtitle">플레이 방법 — 파 3·4·5</h2>
+        <p class="vlead">홀은 티에서 그린까지의 직선 거리에 따라 세 종류로 나뉩니다. 그 홀의 파와 같은 타수로 끝내면 '파 플레이'입니다.</p></div>
+      <div class="par-wrap">
+        <div class="par"><span class="p">Short Hole</span><div class="big">파 3</div><div class="dist">~250야드 (229m 이내)</div><p class="desc">원온이 가능한 숏홀. 그린 위 2퍼팅이 기준타입니다. 18홀 중 보통 4개.</p></div>
+        <div class="par"><span class="p">Middle Hole</span><div class="big">파 4</div><div class="dist">251~470야드</div><p class="desc">투온이 가능한 미들홀. 가장 흔한 홀로 18홀 중 약 10개를 차지합니다.</p></div>
+        <div class="par"><span class="p">Long Hole</span><div class="big">파 5</div><div class="dist">471야드~</div><p class="desc">스리온이 가능한 롱홀. 18홀 중 보통 4개. 거리 관리가 관건입니다.</p></div>
+      </div>
+      <div class="formula">파 3 × 4홀 &nbsp;+&nbsp; 파 4 × 10홀 &nbsp;+&nbsp; 파 5 × 4홀 &nbsp;=&nbsp; <b>72타 (파 플레이)</b></div>
+      <p class="vp">예를 들어 4일간 10언더파로 경기를 마쳤다면 72×4=288타가 파, 여기서 10타를 줄인 278타로 라운드를 끝냈다는 뜻입니다. 입문자는 한 라운드에 120·130타가 넘을 수도 — 골프는 가장 어려운 스포츠 중 하나입니다.</p>
+    </section>
+
+    <!-- MATCH -->
+    <section class="view" data-view="match">
+      <div class="vhead"><span class="vtag"><span class="l"></span>PART I · 입문</span><h2 class="vtitle">경기 방법</h2>
+        <p class="vlead">골프 경기 방식은 약 30여 가지. 그중 가장 일반적인 두 가지가 스트로크 플레이와 매치 플레이입니다.</p></div>
+      <div class="grid g2">
+        <div class="card"><span class="kn">Stroke Play</span><h4>스트로크 플레이</h4><p>정해진 홀 수의 스코어를 종합해 숫자가 적은 쪽이 이기는 방식. 잘못 친 것과 반칙의 벌타가 모두 포함됩니다. 핸디캡을 인정하면 언더 핸디, 인정하지 않으면 스크래치 플레이라 합니다.</p></div>
+        <div class="card"><span class="kn">Match Play</span><h4>매치 플레이</h4><p>매 홀에서 그 타수로 승부를 결정. 타수가 적은 사람이 그 홀의 승자이며, 동수면 하프(무승부). 이긴 홀 수가 남은 홀 수보다 많아지는 쪽이 최종 승자입니다.</p></div>
+      </div>
+      <p class="vp">핸디캡(handycap)은 골프만의 독특한 제도로, 수가 많을수록 초보자, 적을수록 고단자입니다.</p>
+    </section>
+
+    <!-- CLUBS -->
+    <section class="view" data-view="clubs">
+      <div class="vhead"><span class="vtag"><span class="l"></span>PART I · 입문</span><h2 class="vtitle">골프 용구</h2>
+        <p class="vlead">골프는 기술과 더불어 장비 선택이 중요한 스포츠. 1983년 이후 공식 경기에서는 14개 이하의 클럽만 사용할 수 있습니다.</p></div>
+      <div class="club-row">
+        <div class="club"><div class="cn">01</div><h4>우드</h4><div class="en">Wood Club</div><p>헤드가 크고 샤프트가 긴 클럽. 티잉 그라운드에서 장타를 칠 때 주로 사용합니다. 요즘은 헤드가 금속인 '메탈 우드'가 일반적입니다.</p></div>
+        <div class="club"><div class="cn">02</div><h4>아이언</h4><div class="en">Iron Club</div><p>헤드가 금속인 클럽. 로프트에 따라 1~9번으로 나뉘며, 페어웨이에서 그린 위 홀로 볼을 붙이는 역할을 합니다.</p></div>
+        <div class="club"><div class="cn">03</div><h4>퍼터</h4><div class="en">Putter</div><p>그린 위에서 홀컵에 볼을 넣을 때 사용. 오버래핑·역오버래핑·크로스핸드 등 잡는 법이 다양합니다.</p></div>
+      </div>
+      <h3 class="vsub">클럽의 3가지 구조</h3>
+      <div class="grid g3">
+        <div class="card"><span class="kn">Head</span><h4>헤드</h4><p>공을 던질 때의 손바닥에 해당. 샤프트가 원심력으로 바꿔 전한 힘을 정확한 방향으로 날려보냅니다.</p></div>
+        <div class="card"><span class="kn">Shaft</span><h4>샤프트</h4><p>팔에 해당하는 부분. 몸의 회전 에너지를 원심력으로 바꿔 헤드에 전달합니다. 가볍고 탄성차가 클수록 이상적입니다.</p></div>
+        <div class="card"><span class="kn">Grip</span><h4>그립</h4><p>골퍼와 클럽을 잇는 유일한 접점. 베이스볼·인터로킹·오버래핑 3가지 잡는 법이 있습니다.</p></div>
+      </div>
+      <p class="vp">정통 풀세트는 우드 1·3·4·5, 아이언 3~9번, 샌드웨지(S/W)·피칭웨지(P/W)·퍼터까지 14개. 하프세트는 8개 클럽입니다. 꼭 정해진 구성은 없으며 자신에게 맞게 바꿀 수 있습니다.</p>
+    </section>
+
+    <!-- GLOSSARY -->
+    <section class="view" data-view="glossary">
+      <div class="vhead"><span class="vtag"><span class="l"></span>PART I · 입문</span><h2 class="vtitle">골프 용어 사전</h2>
+        <p class="vlead">기준타수(파)를 중심으로 한 타 한 타의 이름들. 그리고 코스에서 마주치는 필수 용어와 규칙 정의를 검색해 찾아보세요.</p></div>
+      <div class="ladder">
+        <div class="step" style="background:#8a3a3a"><div class="s">DOUBLE BOGEY</div><div class="name">더블보기</div><div class="v">+2</div></div>
+        <div class="step" style="background:#a5603a"><div class="s">BOGEY</div><div class="name">보기</div><div class="v">+1</div></div>
+        <div class="step" style="background:#5a6a4a"><div class="s">PAR</div><div class="name">파</div><div class="v">0</div></div>
+        <div class="step" style="background:#3a6b8a"><div class="s">BIRDIE</div><div class="name">버디</div><div class="v">−1</div></div>
+        <div class="step" style="background:#2e5d3f"><div class="s">EAGLE</div><div class="name">이글</div><div class="v">−2</div></div>
+        <div class="step" style="background:#c6a15b;color:#0e2419"><div class="s">DBL EAGLE</div><div class="name">더블이글</div><div class="v">−3</div></div>
+      </div>
+      <div class="gloss-search"><label class="isearch"><span class="ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4"/></svg></span><input id="glossSearch" type="text" placeholder="용어 검색 — 예: 그립, 드롭, 홀인원, OB" aria-label="용어 검색" /></label></div>
+      <div class="gloss-grid" id="glossGrid"></div>
+    </section>
+
+    <!-- ETIQUETTE -->
+    <section class="view" data-view="etiquette">
+      <div class="vhead"><span class="vtag"><span class="l"></span>PART I · 입문</span><h2 class="vtitle">코스에서의 예의와 보호</h2>
+        <p class="vlead">골프는 심판 없이 스스로를 규율하는 스포츠. 안전과 배려, 그리고 코스를 아끼는 매너가 곧 실력입니다.</p></div>
+      <div class="etq">
+        <div class="card"><h4><span class="qn">01</span>안전의 확인</h4><p>스트로크나 연습 스윙 전, 클럽·볼·돌·나뭇가지가 날아가 사람이 다칠 만한 위치에 아무도 없는지 반드시 확인합니다. 앞 조가 볼 도달거리 밖으로 나갈 때까지 쳐서는 안 됩니다.</p></div>
+        <div class="card"><h4><span class="qn">02</span>다른 플레이어 배려</h4><p>동반자가 어드레스하거나 볼을 치는 동안 움직이거나 말하거나, 볼·홀 근처나 바로 뒤에 서지 않습니다.</p></div>
+        <div class="card"><h4><span class="qn">03</span>플레이 속도</h4><p>지체 없이 플레이합니다. 분실 우려가 있으면 잠정구를 치고, 5분 이상 찾지 않으며, 한 홀 이상 벌어지면 후속 조를 패스시킵니다.</p></div>
+        <div class="card"><h4><span class="qn">04</span>벙커 정리</h4><p>벙커를 나오기 전, 자신이 만든 발자국과 움푹 팬 곳을 모두 정성껏 평탄하게 골라 놓습니다.</p></div>
+        <div class="card"><h4><span class="qn">05</span>디봇·볼마크 수리</h4><p>자신이 만든 디봇 자국과 그린 위 볼마크, 스파이크 손상을 정성껏 고쳐 놓습니다.</p></div>
+        <div class="card"><h4><span class="qn">06</span>그린 보호</h4><p>백·깃대를 놓을 때, 홀에서 볼을 집을 때 그린과 홀이 상하지 않도록 조심합니다. 깃대는 떠나기 전 홀 중심에 제대로 세웁니다.</p></div>
+      </div>
+    </section>
+
+    <!-- SWING -->
+    <section class="view" data-view="swing">
+      <div class="vhead"><span class="vtag"><span class="l"></span>PART I · 입문</span><h2 class="vtitle">스윙의 7단계</h2>
+        <p class="vlead">그립에서 피니시까지, 하나의 스윙을 이루는 일곱 개의 순간. 단계를 눌러 각 동작의 핵심을 확인하세요.</p></div>
+      <div class="stepper"><div class="step-tabs" id="stepTabs"></div><div id="stepPanels"></div></div>
+    </section>
+
+    <!-- TIPS A~E -->
+    <section class="view" data-view="tips-a"></section>
+    <section class="view" data-view="tips-b"></section>
+    <section class="view" data-view="tips-c"></section>
+    <section class="view" data-view="tips-d"></section>
+    <section class="view" data-view="tips-e"></section>
+
+    <!-- SEARCH -->
+    <section class="view" data-view="search">
+      <div class="vhead"><span class="vtag"><span class="l"></span>Search</span><h2 class="vtitle" id="srTitle">검색 결과</h2></div>
+      <div id="srResults"></div>
+    </section>
+  </div>
+</div>
+
+<script>
+/* ---------------- DATA ---------------- */
+const GLOSSARY=[
+  {k:"파",en:"Par",d:"티를 출발해 홀을 마치기까지 정해진 기준 타수. 그린 위 퍼팅은 2번으로 기준합니다."},
+  {k:"버디",en:"Birdie",d:"한 홀에서 파보다 한 타 적게 홀컵에 넣은 것. −1."},
+  {k:"보기",en:"Bogey",d:"한 홀에서 파보다 한 점 더 친 득점. +1."},
+  {k:"이글",en:"Eagle",d:"한 홀에서 기준 타수보다 2타를 적게 친 점수. −2."},
+  {k:"홀인원",en:"Hole in one",d:"단 한 번의 타격으로 볼을 홀컵에 넣는 것. 에이스(ace)라고도 합니다."},
+  {k:"그랜드슬램",en:"Grand slam",d:"4개의 메이저 대회를 모두 석권했을 때 불리는 명예."},
+  {k:"그립",en:"Grip",d:"클럽을 잡는 법. 베이스볼·인터로킹·오버래핑 3가지가 있습니다."},
+  {k:"드롭",en:"Drop",d:"장애지역이나 경기 불가능한 위치의 볼을 규칙에 따라 옮겨 놓는 것. 통상 벌타가 주어집니다."},
+  {k:"갤러리",en:"Gallery",d:"경기를 관전하는 관람객."},
+  {k:"로프트",en:"Loft",d:"클럽 페이스가 가지는 각도나 경사."},
+  {k:"러프",en:"Rough",d:"페어웨이 이외의 잡풀이 우거진 지역. 2~3인치는 쇼트 러프, 4~6인치는 깊은 러프."},
+  {k:"아웃/인",en:"Out / In",d:"1~9홀을 아웃코스, 10~18홀을 인코스라 합니다. 영국 클럽하우스에서 나갔다 돌아온 데서 유래."},
+  {k:"핀",en:"Pin",d:"홀 위치를 표시하기 위해 꽂은 깃대. 깃대의 단면은 원형이어야 합니다."},
+  {k:"퍼트",en:"Putt",d:"목표를 향해 볼을 밀어치는 것. 왼손목을 쓰지 않고 낮게 클럽을 대며 백스핀을 막습니다."},
+  {k:"서든데스",en:"Sudden death",d:"동점자가 나와 어느 홀에서든 이기면 승부가 결정되는 연장전 방식."},
+  {k:"티",en:"Tee",d:"티 그라운드에서 지면에 박고 볼을 올려놓아 샷하도록 고안된 장비, 또는 티 그라운드의 준말."},
+  {k:"티샷",en:"Tee shot",d:"티에서 볼을 치는 것. 보통 각 홀의 최초의 샷을 뜻합니다."},
+  {k:"어드레스",en:"Addressing",d:"스탠스를 취하고 클럽을 지상에 댔을 때. 해저드에서는 스탠스를 취한 때가 어드레스입니다."},
+  {k:"어드바이스",en:"Advice",d:"플레이 결단·클럽 선택·스트로크에 영향을 주는 조언. 깃대 위치 안내 등은 어드바이스가 아닙니다."},
+  {k:"인 플레이의 볼",en:"Ball in Play",d:"티잉 그라운드에서 스트로크하면 곧 인 플레이. 홀 아웃될 때까지 지속됩니다."},
+  {k:"벙커",en:"Bunker",d:"풀과 흙을 제거하고 모래를 넣은 해저드. 볼 일부라도 벙커에 접촉하면 벙커 안의 볼입니다."},
+  {k:"캐디",en:"Caddie",d:"플레이 중 클럽을 운반·취급하거나 규칙에 따라 플레이어를 원조하는 사람."},
+  {k:"캐주얼 워터",en:"Casual Water",d:"코스 상에 일시적으로 고인 물. 워터 해저드 안의 물은 캐주얼 워터가 아닙니다."},
+  {k:"위원회",en:"Committee",d:"경기를 관리하는 위원회. 경기 문제가 아니면 코스를 관리하는 위원회를 뜻합니다."},
+  {k:"깃대",en:"Flagstick",d:"홀 위치를 표시하기 위해 홀 중심에 세운 움직일 수 있는 표식. 단면은 원형."},
+  {k:"수리지",en:"Ground Under Repair",d:"위원회가 수리지로 선언한 코스 내 구역. 그린 키퍼가 만든 구멍도 포함됩니다."},
+  {k:"해저드",en:"Hazards",d:"모든 벙커 또는 워터 해저드를 통칭합니다."},
+  {k:"홀",en:"Hole",d:"직경 108mm(4.25인치), 깊이 100mm(4.0인치) 이상. 원통은 그린면에서 최소 25mm 아래로 묻습니다."},
+  {k:"오너",en:"Honour",d:"티잉 그라운드에서 가장 먼저 플레이하는 플레이어."},
+  {k:"래터럴 워터 해저드",en:"Lateral W.H.",d:"후방 드롭이 불가능한 워터 해저드. 적색 말뚝/선으로 경계를 표시합니다."},
+  {k:"루스 임페디먼트",en:"Loose Impediments",d:"고정·생장하지 않은 돌·나뭇잎·나뭇가지 등 자연물. 그린 위 모래·흙도 포함됩니다."},
+  {k:"분실구",en:"Lost Ball",d:"찾기 시작해 5분 이내에 발견·확인하지 못하거나, 잠정구를 홀에 더 가까이 친 경우 등."},
+  {k:"마커",en:"Marker",d:"스트로크 플레이 때 경기자의 스코어를 기록하도록 위원회가 임명한 사람. 심판원은 아닙니다."},
+  {k:"가장 가까운 구제지점",en:"Nearest Point of Relief",d:"장해물·비정상 코스상태 등에서 벌 없이 구제받을 때의 기점. 홀에 더 가깝지 않아야 합니다."},
+  {k:"장해물",en:"Obstructions",d:"도로·통로의 인공 표면 등 모든 인공물. OB 표시 말뚝·울타리는 제외됩니다."},
+  {k:"아웃 오브 바운드",en:"Out of Bounds",d:"코스 경계를 넘어선 장소. 볼 전체가 OB에 있을 때 OB의 볼이 됩니다."},
+  {k:"국외자",en:"Outside Agency",d:"경기와 관계없는 사람·사물. 심판원·마커·포어캐디는 국외자이며 바람과 물은 아닙니다."},
+  {k:"파트너",en:"Partner",d:"같은 사이드에 속한 자기편 플레이어."},
+  {k:"벌타",en:"Penalty Stroke",d:"규칙에 따라 스코어에 부가되는 스트로크."},
+  {k:"잠정구",en:"Provisional Ball",d:"워터 해저드 이외에서 분실·OB 염려가 있을 때 규칙에 따라 치는 볼."},
+  {k:"퍼팅그린",en:"Putting Green",d:"현재 플레이 중인 홀의 퍼팅을 위해 특별히 정비한 구역."},
+  {k:"심판원",en:"Referee",d:"사실 문제를 재정하고 규칙을 적용하기 위해 위원회가 임명한 사람."},
+  {k:"럽 오브 더 그린",en:"Rub of the Green",d:"움직이는 볼이 국외자에 의해 우연히 방향이 바뀌거나 정지된 경우."},
+  {k:"스탠스",en:"Stance",d:"스트로크를 위해 발을 제 위치에 정하고 섰을 때."},
+  {k:"정규의 라운드",en:"Stipulated Round",d:"홀 순서에 따라 코스의 여러 홀을 플레이하는 것. 통상 18홀입니다."},
+  {k:"스트로크",en:"Stroke",d:"볼을 올바르게 쳐 움직일 의사로 행한 클럽의 전방 동작. 도중에 자발적으로 중지하면 스트로크가 아닙니다."},
+  {k:"티잉 그라운드",en:"Teeing Ground",d:"홀의 출발 장소. 2개 티마커 외측을 경계로 하는 2클럽 길이의 직사각형 구역."},
+  {k:"스루 더 그린",en:"Through the Green",d:"플레이 중인 홀의 티·그린과 코스 내 모든 해저드를 제외한 코스 전 구역."},
+  {k:"워터 해저드",en:"Water Hazard",d:"바다·호수·연못·하천·도랑 등의 수역. 황색 말뚝/선으로 한계를 표시합니다."},
+  {k:"오구",en:"Wrong Ball",d:"인 플레이 볼·잠정구 등 자신의 볼 이외의 모든 볼."},
+  {k:"드라이버",en:"Driver",d:"길이 42~44인치, 공 치는 부분이 큰 가장 긴 클럽. 장타에 사용합니다."},
+  {k:"롱아이언",en:"Long iron",d:"보통 1·2·3번 아이언. 플레이가 어렵지만 잘 쓰면 비장의 무기가 됩니다."}
+];
+
+const SWING=[
+  {n:"01",tab:"그립",stage:"GRIP",title:"편하게, 그러나 안정되게",body:"치약을 짜는 정도, 새를 잡는 정도의 힘이면 충분합니다. 그립은 두 가지만 지키면 됩니다.",li:["손목과 팔의 움직임을 허용하며 전체 스윙에 걸쳐 안정되게 잡을 것","편안할 것 — 불편하면 자신감이 손상됩니다","너무 강하면 페이스가 닫히고, 너무 약하면 임팩트 때 오픈됩니다","베이스볼·오버래핑·인터로킹 중 자신에게 맞는 그립을 선택"]},
+  {n:"02",tab:"스탠스",stage:"STANCE",title:"스윙의 기본이자 원천",body:"양발 뒤꿈치 거리는 어깨 넓이로, 클럽이 짧아질수록 좁힙니다. 무릎은 약간 굽히고 허리에서 15~20도 숙입니다.",li:["두 발·무릎·엉덩이·어깨 선이 목표선과 평행이 되도록","드라이버는 스탠스 먼저, 그 다음 그립","아이언은 페이스 세팅 먼저, 스탠스는 나중에","왼쪽으로 밀리면 클로즈드, 오른쪽으로 밀리면 오픈 스탠스가 도움"]},
+  {n:"03",tab:"어드레스",stage:"ADDRESS",title:"근육이 함께 움직일 준비",body:"몸의 모든 근육이 스윙을 함께 시작할 준비를 하는 자세. 클럽 페이스를 목표선과 스퀘어하게 놓는 것이 핵심입니다.",li:["칠 샷을 먼저 결정한다","알맞은 그립 후 페이스와 비구선이 직각을 이루게","클럽을 공 바로 뒤 지면에 정확히 댄다","발·무릎·엉덩이·어깨가 목표선 왼쪽에서 평행을 이루게"]},
+  {n:"04",tab:"백스윙",stage:"BACKSWING",title:"힘이 아니라 위치를 바꾸는 것",body:"백스윙은 파워와 무관합니다. 단지 톱에서 클럽의 위치를 정확히 하는 예비 동작일 뿐입니다.",li:["손과 팔이 먼저 움직이고, 그 다음 어깨·허리·무릎이 따라온다","클럽 헤드를 땅에 가깝게 하면 왼쪽 어깨가 낮아져 무너진다","손목으로 헤드를 움직이려 하면 스윙이 완전히 잘못된다","왼손·왼팔 주도의 스윙이 정답"]},
+  {n:"05",tab:"톱스윙",stage:"TOP",title:"블레이드 각도의 유지",body:"어깨는 충분히 90도(아마추어는 70~80도도 훌륭), 히프는 45도 회전합니다. 드라이버 샤프트는 지면과 수평, 비구선과 평행이 이상적입니다.",li:["왼쪽 어깨가 처지지 않고 오른쪽은 히프부터 어깨까지 쭉 편다","체중 이동된 오른 다리는 약간 굽힌다","손목이 약 30도 굽혀져야 블레이드 각이 올바르다","이 상태에서 다운스윙하면 임팩트 때 자동으로 스퀘어가 된다"]},
+  {n:"06",tab:"다운스윙",stage:"DOWNSWING",title:"왼손·왼팔의 프리 스윙",body:"히프를 돌려 시작한다는 통설은 틀렸습니다. 어깨와 무관하게 왼손·왼팔을 공 쪽으로 프리 스윙하는 것이 기초입니다.",li:["느리게 할수록 릴리이스 타이밍이 정확해져 힘이 커진다 (벤 호건의 원리)","양발·양다리의 반동력이 손의 힘을 증폭시킨다","하체 반동력이 크면 힘도 커진다 (잭 니클라우스의 '다리에서 오는 힘')","빠르면 빠를수록 좋다 — 손을 사용해야 히프가 따라 움직인다"]},
+  {n:"07",tab:"폴로스루·피니시",stage:"FINISH",title:"클수록 좋다",body:"풀스윙으로 온 몸을 균형 있게 사용해 최대 헤드 스피드를 얻습니다. 임팩트 순간 모든 힘을 집중시킵니다.",li:["임팩트 후 오른팔은 충분히 뻗어져 있어야 한다","오른발 뒤꿈치를 들어 피니시에서 발바닥이 다 보일 정도로","엉덩이와 어깨는 척추 주위로 회전해 왼쪽·목표 방향을 향한다","클럽은 왼쪽 어깨 뒤에 각을 이루며 매달린다 — 뻣뻣이 펴면 과긴장"]}
+];
+
+const CATS={a:{name:"스윙 기초",cls:"cat-a",lead:"헤드업·오버스윙·그립·리듬 등 스윙을 이루는 기본기 20가지."},
+  b:{name:"비거리",cls:"cat-b",lead:"드라이버 비거리와 안정된 티샷을 위한 18가지 요령."},
+  c:{name:"쇼트게임",cls:"cat-c",lead:"어프로치·벙커·퍼팅으로 스코어를 지키는 20가지 비결."},
+  d:{name:"기술샷",cls:"cat-d",lead:"경사·바람·트러블 등 상황별 기술샷 20가지."},
+  e:{name:"스코어 관리",cls:"cat-e",lead:"코스 공략과 멘탈로 90타를 깨는 19가지 전략."}};
+
+const TIPS=[
+ {n:1,c:"a",t:"헤드업 예방법",b:"매트에 분필로 동그라미를 그리고 볼을 올린 뒤, 임팩트 직후 표식을 눈으로 확인한다는 의식으로 반복한다. 날아가는 볼을 보려 하면 자세가 흐트러지므로 볼 아래 표식을 끝까지 본다."},
+ {n:2,c:"a",t:"오버 스윙의 교정",b:"톱에서 왼손 엄지가 샤프트를 받치면 오버스윙을 막는다. 백스윙 때 무릎 각도·방향이 흔들리지 않아야 하며, 오른쪽 스웨이나 과도한 코킹, 왼팔을 굽히는 것이 원인이다."},
+ {n:3,c:"a",t:"올바른 그립의 강도",b:"왼손 중지·약지·새끼손가락으로 확실히 잡고 엄지가 샤프트 위에 오게 한다(오버스윙 브레이크). 쇼트게임은 그립 강도가 아닌 백스윙 크기로 거리를 맞추고, 톱에서 피니시까지 견고히 휘두른다."},
+ {n:4,c:"a",t:"스윙 축은 어디인가",b:"뒷머리 아래 목~척추~히프를 지나 지면에 이르는 막대기를 상상해 그 선을 중심으로 헤드를 휘두른다. 백스윙 때 꼰 허리를 어드레스 위치로 푸는 힘으로 다운스윙하면 스웨이 없이 회전한다."},
+ {n:5,c:"a",t:"백스윙때 스웨이 방지법",b:"어드레스 때 발끝(엄지발가락)에 체중을 실으면 백스윙 시 오른쪽으로 쏠리지 않는다. 몸을 고정한 채 클럽을 뒤로 가져가 왼 어깨쪽 등에 긴장(코일링)이 느껴지면 천천히 백스윙한다."},
+ {n:6,c:"a",t:"힘빼는 요령",b:"힘이 많아도 적어도 밸런스가 무너진다. 하반신을 견고히 유지하며 스윙하는 것이 자연스럽고, 실제 샷은 연습스윙보다 힘이 들어가므로 더 느긋한 속도로 클럽을 가져간다."},
+ {n:7,c:"a",t:"스윙 리듬",b:"백스윙은 하체를 고정하고 상체를 코일링하는 것. 오른발 엄지발가락 안쪽에 체중을 실어 오른쪽에 벽을 만들면 상체 꼬임이 느껴지고 리듬이 자연히 느긋해진다. 어깨를 턱밑으로 넣어 돌린다."},
+ {n:8,c:"a",t:"어드레스",b:"형태보다 힘 조절이 스윙 성패를 가른다. 클럽헤드를 지면에서 2mm 띄워 무게를 느끼면 균형 잡힌 어드레스가 되며, 밀착시키면 테이크백 때 팔에 쓸데없는 힘이 들어간다."},
+ {n:9,c:"a",t:"다운스윙때의 체중이동",b:"체중이동은 스윙의 결과일 뿐 의식적으로 하지 않는다. 다운스윙이 시작되면 헤드가 왼쪽으로 휘둘려 자연히 왼발에 실리며, 임팩트까지 오른발 뒤축이 지면에 밀착됐다고 느낀다."},
+ {n:10,c:"a",t:"올바른 피니시",b:"피니시는 스윙의 척도다. 스윙궤도가 무너지지 않는 범위에서 헤드스피드를 최대로 높이면 자연스럽게 이뤄진다. 느긋한 속도로 100야드부터 20야드씩 궤도로 거리를 늘려간다."},
+ {n:11,c:"a",t:"톱오브스윙의 위치",b:"톱은 백스윙이 결정한다. 어깨 회전 때 오른 무릎이 무너지거나 오른 허리가 흔들리면 안 된다. 오른 허벅지 안쪽에 긴장이 느껴질 때 상체 회전을 멈추고 팔을 위로 휘둘러 올린다."},
+ {n:12,c:"a",t:"올바른 다운스윙",b:"볼을 치는 것은 몸이나 손이 아니라 클럽이다. 다운 전환은 하체부터 시작하고(왼발 안쪽으로 디딤) 상체는 톱 위치를 유지한다. 상하체 '꼬임의 차'를 만든 뒤 상체를 푸는 데서 파워가 나온다."},
+ {n:13,c:"a",t:"정확한 임팩트",b:"임팩트 성패는 폴로스루로 평가된다. 임팩트에만 집착하지 말고, 클럽을 가슴 높이로 수평으로 잡아 좌우로 비트는 연습으로 스윙플레인(면)을 익혀 그 면을 따라 휘두른다."},
+ {n:14,c:"a",t:"라운딩중 연속된 미스샷",b:"주원인은 어드레스 — 목표지점을 잘못 잡은 것이다. OB·해저드 압박에 시선이 그쪽으로 쏠려 몸 방향이 바뀐다. 샷마다 명확한 목표를 정하고 후반엔 허리를 곧게 펴 피로를 관리한다."},
+ {n:15,c:"a",t:"플라잉엘보로 생기는 슬라이스",b:"톱에서 오른 겨드랑이가 열려 팔꿈치가 뜨면(플라잉엘보) 아웃-인 궤도로 슬라이스가 난다. 어드레스 때 오른 팔꿈치가 지면을 향하게 한 뒤 그립하면 올바른 톱이 만들어진다."},
+ {n:16,c:"a",t:"빠른 스윙으로 생기는 슬라이스",b:"톱에서 오른 어깨가 앞으로 빠지면 아웃-인 궤도로 슬라이스가 난다. 원인은 왼 어깨가 뒤로 빠지는 것 — 오른발을 한 걸음 뒤로 뺀 크로스 스탠스로 왼 어깨가 빠지지 않게 연습한다."},
+ {n:17,c:"a",t:"연속사진을 활용하라",b:"연속스윙 사진은 이미지 구축에 유용하나 한 컷씩 모방하면 역효과다. 임팩트 사진은 클럽이 왼쪽으로 돌아가는 순간일 뿐 — 그립엔드가 배꼽을 향한 채 헤드를 회전시킨다는 하나의 연속 동작으로 스윙한다."},
+ {n:18,c:"a",t:"스카이볼 교정법",b:"멀리 치려는 의식에 오른 어깨가 처지고 헤드가 위로 올라가면 스카이볼이 난다. 왼손 리드 스윙을 익히고, 임팩트 직후 오른손을 그립에서 떼 왼손만으로 휘두르는 연습을 한다."},
+ {n:19,c:"a",t:"20야드 더 멀리 치려면",b:"헤드스피드를 늘리려면 피니시 후 멈추지 말고 다시 톱으로 되돌리는 연속스윙을 반복한다. 척추를 축으로 백스윙은 오른쪽, 다운스윙은 왼쪽을 일정 위치로 유지해야 궤도가 일정해진다."},
+ {n:20,c:"a",t:"비거리 늘리는 요령",b:"백스윙을 천천히 하기보다 상체를 얼마나 꼬느냐가 관건. 헤드 무게를 느낄 스피드로 백스윙하고, 몸이 오른쪽으로 쏠리면 되돌리는 동작에서 오차가 생기니 스탠스 폭 안에서 회전한다."},
+ {n:21,c:"b",t:"피니시가 불안정할때",b:"스윙 중 어느 부분에 쓸데없는 힘이 들어가면 피니시가 안 된다. 하반신 폭을 줄이고 왼발 힐업을 억제하며, 임팩트가 끝날 때까지 오른발 뒤축을 땅에 붙여 스윙축의 흔들림을 막는다."},
+ {n:22,c:"b",t:"힐업은 필요한가",b:"백스윙 목적은 하반신을 고정한 채 상체를 꼬는 것. 왼발 뒤축은 '드는' 것이 아니라 꼬임의 결과로 '들리는' 것이며, 의식적으로 들면 스웨이가 난다. 오른발 뒤축은 임팩트까지 떼지 않는다."},
+ {n:23,c:"b",t:"플로스루 스피드와 거리",b:"임팩트 지점 헤드스피드가 같아도 임팩트 후 가속되느냐 감속되느냐가 거리를 가른다. 임팩트 후 '윙' 소리가 왼쪽 귀에서 들리도록 왼팔을 쭉 뻗어 폴로스루까지 스피드를 최대로 한다."},
+ {n:24,c:"b",t:"백스윙이 크면 거리가 늘까",b:"하반신을 흔들며 쓰기보다 테이크백 때 하반신을 고정하고 상체를 감아 꼬는 데 집중한다. 왼발 뒤축은 들지 않고, 오른 무릎을 고정해 스웨이를 막으며 임팩트까지 오른발 뒤축을 붙여둔다."},
+ {n:25,c:"b",t:"거리를 내리면",b:"쓸데없이 움직이기보다 움직이지 않고 정확히 맞히는 것이 거리에 유리하다. 오른발 안쪽을 땅에 붙인 채 오른 무릎을 왼 무릎 쪽으로 접근시키면 몸이 수평 회전해 임팩트존이 길어지고 거리·방향성이 안정된다."},
+ {n:26,c:"b",t:"속성 비거리 늘리는 요령",b:"스탠스 때 오른발을 비구선과 직각(발끝 12시)으로 둔다. 처음엔 불편하지만 그 불편함이 상체가 감겼다는 증거 — 오른 무릎이 쏠리거나 펴지지 않아 오른편에 벽이 생겨 파워가 축적된다."},
+ {n:27,c:"b",t:"몸 출렁거림을 막으려면",b:"드라이버에서 거리 욕심에 몸을 많이 쓰면 출렁인다. 티를 낮게 하고 5번 아이언으로 매트 위 탄도를 유지하며 치되, 특히 티가 날아가지 않도록 쳐 쓸데없는 상하·좌우 움직임을 교정한다."},
+ {n:28,c:"b",t:"긴 샤프트에 큰 헤드 좋나",b:"크고 길다고 무조건 좋은 건 아니며 후반 체력 저하 시 부담스럽다. 자기 마음대로 뿌릴 수 있어야 하며, 주말골퍼는 짧고 강도 낮은 샤프트가 낫다. 다운 전환 때 헤드가 그립보다 낮아지지 않게 한다."},
+ {n:29,c:"b",t:"롱드라이버 올바른 스윙법",b:"45인치 이상 티탄 드라이버는 헤드가 어드레스로 돌아오길 기다리듯 천천히 뿌린다. 서두르면 상체가 열려 페이스가 오픈되니, 헤드가 다운스윙을 이끈다는 이미지로 코킹을 미리 푼다."},
+ {n:30,c:"b",t:"긴 샤프트를 사용할 때",b:"익숙함의 함정 — 거리 욕심에 어드레스 때 몸이 앞으로 쏠린다. 그립을 1인치 짧게 잡고 볼을 몸 가까이 두며, 등에 긴장감이 들 만큼만 숙여 토에 맞거나 미스하는 것을 막는다."},
+ {n:31,c:"b",t:"호쾌한 샷의 비결",b:"스윙 중 상하·좌우 움직임을 막아야 파워가 낭비되지 않는다. 헤드업을 신경 쓰기보다 목과 무릎 높이를 끝까지 유지하고, 거리를 낼수록 스탠스를 넓히고 턱을 약간 들어 스윙아크를 크게 한다."},
+ {n:32,c:"b",t:"거리를 내는 스윙플레인",b:"'클럽을 똑바로 당겨라'는 비구선이 아니라 스윙플레인 기준이다. 왼쪽 어깨~클럽헤드를 하나의 막대기로 여겨 백스윙하면 자연히 인사이드로 당겨지고, 그립이 오른 허리 높이에 오면 팔을 들어올려 왼 어깨를 꼰다."},
+ {n:33,c:"b",t:"티샷도 공략 계획을 세우자",b:"드라이버 샷은 '200야드 어프로치'로 본다. 무작정 멀리가 아니라 2·3타를 치기 쉬운 지점을 목표로 정하고, 220야드 뒤 내리막이면 평탄한 앞쪽에 떨어뜨린다."},
+ {n:34,c:"b",t:"스윙아크 크게 하려면",b:"일단 클럽을 잡았으면 힘껏 휘두르는 것이 중요하다. 백스윙 때 오른 다리 안쪽에 체중을 많이 실어 하반신을 고정하고 상체만 크게 꼬며, 상체를 세우고 가슴을 펴 전신을 릴랙스한다."},
+ {n:35,c:"b",t:"정확한 타구로 거리 늘리려면",b:"장타자보다 정확히 맞히는 골퍼가 낫다. 폴로스루까지 머리 위치를 유지하고, 임팩트를 얼굴 정면이 아닌 왼쪽에서 이뤄지게 한다. 어드레스 때 클럽·팔·가슴의 간격을 유지한다."},
+ {n:36,c:"b",t:"안정된 티샷을 하려면",b:"드라이버를 80% 힘으로만 스윙해 페어웨이에 떨어뜨린다. 거리 욕심이 지나치면 몸을 필요 이상 써 스윙축이 무너진다 — 백스윙 때 오른발 뒤꿈치를 들어 오른 허리가 뒤로 당겨지지 않게 한다."},
+ {n:37,c:"b",t:"맞바람을 이기려면",b:"맞바람이라고 스윙을 바꾸면 골프가 어려워진다. 평상시 스윙으로 낮은 탄도를 구사 — 티를 반 개 낮추고 상체를 더 굽혀 중심을 낮추며 발목 흔들림을 막고, 클럽을 짧게 잡는다."},
+ {n:38,c:"b",t:"오르막 홀에서의 티샷",b:"오르막은 체공시간이 짧고 구름도 적다. 홀이 길어 보여 힘이 들어가니 드라이버 대신 우드3·아이언2,3도 좋다. 눈높이가 어깨라인보다 높아지지 않게 하고 지면과 평행으로 어깨를 회전한다."},
+ {n:39,c:"c",t:"어프로치때 손목을 잘 쓰려면",b:"왼손등과 클럽페이스를 홀 쪽으로 향한 뒤 손목을 고정하고 롱퍼팅 이미지로 친다. 로프트 작은 6번부터 시작해 점차 큰 클럽으로 바꾸며, 몸을 고정하면 로프트에 따라 볼이 자연스럽게 뜬다."},
+ {n:40,c:"c",t:"그린 주변에서 볼을 띄우는 법",b:"볼과 핀 사이에 해저드·러프·벙커가 있으면 띄워야 한다. 헤드를 낮게 깔아 테이크백하고 로프트 큰 클럽을 정상 어드레스로 쓰며, 10야드 이내는 퍼팅하듯, 왼손 그립은 견고하게 잡는다."},
+ {n:41,c:"c",t:"핀에 가까운 어프로치",b:"어드레스 전 연습스윙으로 거리감을 찾는 것이 가장 중요하다. 임팩트 강도가 아닌 백스윙 크기로 거리를 맞추고, 어드레스부터 폴로스루까지 그립을 견고히 유지해 뒤땅을 막는다."},
+ {n:42,c:"c",t:"어프로치때 미스샷 막으려면",b:"생크는 클럽페이스로 정확히 못 쳐서 난다. 원인은 그립과 헤드업 — 왼손 그립을 폴로스루까지 견고히 잡고, 업라이트로 올린 뒤 예각으로 내려치며 헤드 무게를 느낀다."},
+ {n:43,c:"c",t:"볼 앞쪽 잔디를 깎아 파듯이 스윙",b:"핸드퍼스트로 낮은 탄도를 억지로 치면 생크가 난다. 볼을 왼발쪽에 놓고 핸드퍼스트를 억제한 뒤, 테이크백을 목표선 뒤로 천천히 밀고 볼 앞쪽 잔디를 깎아 파듯 헤드를 넣는다."},
+ {n:44,c:"c",t:"방향성을 높이려면",b:"클럽 솔이 지면에 밀착됐을 때 페이스가 목표를 향한다 — 토가 들리면 볼이 왼쪽, 힐이 들리면 오른쪽으로 간다. 경사 라이에서는 이 특성을 감안해 목표를 좌우로 조정하고 머리를 고정한다."},
+ {n:45,c:"c",t:"어드레스 전에 목표선 정하라",b:"그린 100~150야드 샷은 어드레스 전 볼 뒤에 서서 목표라인을 정하고 칠 샷을 머릿속에 그린다. 탄도를 미리 그리면 오르막·내리막에서 자연스러운 자세가 나온다."},
+ {n:46,c:"c",t:"어프로치 요령",b:"평탄하면 굴려 붙이는 러닝 어프로치가 안전하다. 볼을 오른발쪽에 놓아 손이 앞서게 하고, 페이스를 닫아 인사이드로 백스윙하며 임팩트 후 헤드가 인사이드로 감기게 해 방향성을 높인다."},
+ {n:47,c:"c",t:"뒤땅을 안치려면",b:"헤드업 자체보다 그 원인을 알아야 한다. 어드레스 때 너무 숙이거나 뻣뻣이 서면 스윙 중 몸이 상하로 움직여 헤드업이 난다 — 상체를 적당히 숙이고 임팩트 때 왼손 그립을 견고히 한다."},
+ {n:48,c:"c",t:"벙커샷 요령",b:"부드러운 모래일수록 부드럽게 스윙한다. 힘주어 내리치면 저항이 커져 탈출이 어려우므로, 릴랙스하게 샌드웨지 밑면을 볼 가까운 지점에 가볍게 떨어뜨리듯 친다."},
+ {n:49,c:"c",t:"벙커에서 미스샷 막으려면",b:"샌드웨지는 리딩에지보다 소울(밑면)이 먼저 닿게 설계됐다. 페이스를 최대한 열어(하늘을 향하게) 소울이 먼저 모래를 때리게 하고, 볼에 좀 더 가까이 서서 업라이트로 들어올려 폭발시킨다."},
+ {n:50,c:"c",t:"에그플라이에서의 벙커샷",b:"모래에 푹 박힌 볼은 페이스를 열지 않는다. 발을 최대한 파묻어 볼을 상대적으로 높이고, 페이스를 닫아 볼과 모래를 못 박듯 동시에 퍼낸다 — 거리·방향보다 꺼내는 것이 우선이다."},
+ {n:51,c:"c",t:"핀과 거리가 짧은 벙커샷",b:"핀이 눈앞이면 거리감 잡기가 어렵다. 미스는 폴로스루를 안 해서 나므로 어중간하지 않게 과감히 스윙하고, 페이스를 완전히 열어 탄도를 우선하며 폴로스루까지 일정한 스피드로 뿌린다."},
+ {n:52,c:"c",t:"해저드 넘겨야하는 어프로치",b:"그린 앞 장애물은 띄워 세워야 한다. 퍼올리거나 핸드퍼스트(런 많음)는 금물 — 로프트 큰 웨지를 스퀘어로 셋업하면 체중이 왼쪽에 실리고, 하프~4분의3 스윙으로 높이 띄운다."},
+ {n:53,c:"c",t:"스리퍼팅을 막으려면",b:"퍼팅도 스윙의 축소형이다. 짧은 퍼팅을 놓치는 건 결과를 먼저 보려 머리를 들어 몸이 왼쪽으로 당겨지기 때문 — 매트에 표식을 하고 임팩트 후 표식 확인까지 머리를 들지 않는다."},
+ {n:54,c:"c",t:"3m내 짧은 퍼팅 요령",b:"신중한 마음가짐으로 라인·경사를 파악하고 페이스를 라인에 직각으로 어드레스한다. 실패는 어드레스와 임팩트 때 페이스 방향이 달라서 — 왼발 안쪽에 중심을 두고 왼쪽 벽을 견고히, 임팩트 후 머리를 고정한다."},
+ {n:55,c:"c",t:"퍼팅라인 읽는 법",b:"그린에 올라가기 전, 페어웨이를 걸으며 경사와 굴곡을 본다. 주변 지형이 높은 쪽이 높고, 잔디결이 어두우면 역결(느림)·밝으면 순결(빠름). 홀까지 거리는 보폭으로 재고 볼 반대쪽에서 라인을 체크한다."},
+ {n:56,c:"c",t:"내리막 퍼팅",b:"심한 내리막은 임팩트 소리가 들릴 만큼 쳐서는 안 되고 헤드가 홀을 따라가면 안 된다. 야구 번트처럼 그립을 짧고 다소 강하게 잡아 헤드가 달려가는 것을 막고, 페이스 토(앞쪽)로 살짝 때린다."},
+ {n:57,c:"c",t:"퍼팅수 36타내로 줄이려면",b:"그린 경사는 멀리서 잘 보이니 올라서기 전에 읽는다. 거리는 힘이 아니라 테이크백 크기로 조절하고, 볼 앞 30cm에 목표를 정해 그 연장선을 기준으로 헤드를 뺐다가 친다."},
+ {n:58,c:"c",t:"정확한 퍼팅스트로크",b:"프로처럼 퍼터헤드를 볼 앞에 한 번 놓아본 뒤 뒤로 옮겨 스트로크한다. 퍼팅라인을 볼 뒤쪽으로 연장해 생각하고, 페이스와 스탠스를 목표라인과 평행(스퀘어)하게 맞춰 당겨치거나 밀어치는 실수를 막는다."},
+ {n:59,c:"d",t:"훅성구질을 방지하려면",b:"티 높이를 약간 낮춰 다운블로로 친다. 훅은 인사이드-아웃 궤도와 임팩트 직전 페이스를 급격히 돌리는 데서 나오므로, 아웃사이드로 내려친다는 이미지로 스윙하면 훅을 상쇄할 수 있다."},
+ {n:60,c:"d",t:"훅·슬라이스볼 치려면",b:"스윙은 일정하게 유지하고 스탠스로 구질을 만든다. 훅은 오른발을 뒤로 뺀 클로즈드 스탠스로 인사이드-아웃 궤도를, 슬라이스는 오른발을 앞으로 빼 오픈 스탠스로 아웃사이드-인 궤도를 만든다."},
+ {n:61,c:"d",t:"워터해저드를 극복하려면",b:"물을 두려워하면 반드시 빠진다. 넘길 거리만 생각하고 높이가 필요한지 거리가 필요한지 판단해, 자신감을 갖고 목표를 명확히 정한 뒤 샷한다. 정신적·기술적 문제를 동시에 해결해야 한다."},
+ {n:62,c:"d",t:"높이 띄워치는 리커버리샷",b:"포대그린 등 목표가 높으면 로프트 큰 클럽으로 페이스를 최대한 열고 볼 밑부분을 박아치듯 친다. 퍼올리면 뒤땅·토핑이 나므로 벙커샷 원리처럼 로프트에 맡기고, 볼은 왼발쪽에 놓는다."},
+ {n:63,c:"d",t:"오르막·내리막에서의 티샷",b:"볼 뒤에 서서 지형과 구질을 머릿속에 그린 뒤 스탠스를 잡는다. 어드레스 후에는 시선을 처음 높이대로 두고, 경사에 신경 쓰지 말고 티잉그라운드와 페어웨이를 같은 높이로 시선을 맞춘다."},
+ {n:64,c:"d",t:"디보트에서 잘 치려면",b:"트러블샷으로 생각해 클럽선택에 신중을 기하고, 볼을 위에서 아래로 박아치듯 친다. 솔이 넓은 클럽이 유리하며, 볼부터 먼저 치는 것을 잊지 말고 편안한 마음으로 임한다."},
+ {n:65,c:"d",t:"OB 있는 지역에서의 티샷",b:"무조건 드라이버가 아니라 페어웨이 우드나 롱아이언으로 정확성을 우선한다. 클럽을 한 클럽 내려 짧게 잡으면 스윙이 편하고 볼이 정확히 맞는다. 트러블지역을 피해가는 것이 타수를 줄이는 왕도다."},
+ {n:66,c:"d",t:"경사면에서의 샷",b:"발끝 내리막·왼편 내리막은 슬라이스, 발끝 오르막·왼편 오르막은 훅이 난다(볼은 지형을 따라간다). 이를 감안해 목표방향을 정하고, 스윙 끝까지 무릎 높이와 경사면 높이를 유지한다."},
+ {n:67,c:"d",t:"슬라이스등 미스샷 퇴치법",b:"미스샷은 어드레스 때 방향을 잘못 잡는 데서 온다. 볼 앞쪽 30cm 지점에 목표점을 잡고 그 선(목표라인)을 기준으로 스탠스·클럽페이스를 스퀘어로 정렬한다. 기준 축의 발을 미리 정해두면 정렬이 쉽다."},
+ {n:68,c:"d",t:"경사면에서 정확한 볼 치기",b:"내리막은 볼 위치가 낮으므로 두 무릎을 충분히 굽혀 허리를 낮춰 어드레스한다. 스윙하는 동안 무릎의 각도와 방향을 바꾸지 않는 것이 미스샷을 줄이는 핵심이다."},
+ {n:69,c:"d",t:"왼쪽 내리막 샷의 요령",b:"볼은 중앙에 놓고 슬라이스 방지를 위해 목표를 왼쪽으로 수정한다. 체중을 왼쪽 다리에 실어 임팩트부터 피니시까지 왼쪽 벽을 견고히 하고, 어깨 기울기를 사면과 같게 하며 경사를 따라 굴린다는 기분으로 친다."},
+ {n:70,c:"d",t:"아이언끼리 거리 같을때",b:"5번과 7번 거리가 같다면 로프트대로 정확히 임팩트하지 못하는 것이다. 다운블로를 확실히 해 손목 코킹을 오래 유지하면 로프트별 거리가 일정해진다. 코킹을 먼저 풀면 퍼올려 거리가 준다."},
+ {n:71,c:"d",t:"아이언 정확히 치려면",b:"미들아이언~웨지는 정확성이 생명이다. 샷 전 그린에지까지 거리를 재고 샷 후 낙하·구름 거리를 걸음으로 계산해, 첫 홀부터 그날 자신의 클럽별 거리를 파악한다."},
+ {n:72,c:"d",t:"하프샷 아이언거리 조절",b:"거리는 임팩트 강도가 아니라 백스윙 크기로 조절한다. 왼쪽 어깨를 감는 정도를 기준 삼고, 다운스윙부터 폴로스루까지 힘을 가감하지 않으며 그립 끝이 배꼽에 올 때 스윙을 끝낸다."},
+ {n:73,c:"d",t:"롱아이언을 잘치려면",b:"긴 파3나 긴 파4 세컨드는 롱아이언 대신 페어웨이 우드가 미스샷을 줄인다(밑면이 넓어 뒤땅에 관대). 롱아이언을 쓸 땐 그립을 조금 내려잡고 임팩트 후 오른 어깨가 턱을 치고 나갈 때까지 머리를 고정한다."},
+ {n:74,c:"d",t:"바람을 극복하는 법",b:"볼 탄도는 포물선이 아니라 정점(샷 지점에서 3분의 2 지점) 이후 급격히 바람 영향을 받는다. 샷 지점보다 핀 근처 바람을 읽고, 맞바람이면 한 클럽 길게·뒷바람이면 한 클럽 짧게 잡는다."},
+ {n:75,c:"d",t:"강한 구질을 구사하는 법",b:"임팩트 후 오른발로 지면을 버티며 오른발등이 목표방향을 향하도록 젖혀 왼쪽 무릎 높이가 흔들리지 않는 강한 임팩트를 만든다. '발을 찬다'는 것에 얽매이지 말고 자연스러운 동작으로 이뤄지게 한다."},
+ {n:76,c:"d",t:"페어웨이 벙커 탈출법",b:"발을 모래에 적당히 파묻어 안정시키고(전체가 묻히면 안 됨), 자세가 무너지지 않을 만큼 스윙폭을 줄인다. 강하게 쳐 멀리 보내려는 욕심이 뒤땅을 부르므로 정확한 임팩트가 우선이다."},
+ {n:77,c:"d",t:"롱아이언을 잘쓰려면",b:"롱아이언은 굴려 거리를 내는 클럽이다. 볼을 1cm 높이로 티업하고 3번 아이언으로 하프스윙 어프로치부터 연습하며, 볼을 굴린다는 의식으로 퍼올리는 샷을 막고 폴로스루까지 뿌린다."},
+ {n:78,c:"d",t:"페어웨이 우드로 OB가 날때",b:"세컨드 우드 OB는 성급한 스윙 탓이다. 페어웨이 우드는 샤프트가 길어 다운스윙 때 어드레스로 돌아올 시간이 필요하므로 충분한 백스윙을 하고, 그립이 헤드를 추월하는 느낌으로 서두르지 않는다."},
+ {n:79,c:"e",t:"18번홀서 늘 무너지는데",b:"마지막 홀 붕괴는 욕심과 체력소모, 마음의 해이 탓이다. 힘껏 휘둘러 장타 내려는 생각을 버리고, 티샷 전 어드레스부터 피니시까지 스윙을 한번 점검하며 신중히 풀어간다."},
+ {n:80,c:"e",t:"거리가 짧은 홀의 공략법",b:"짧은 홀일수록 해저드·벙커로 난이도를 높여놨다. 서비스홀이라 방심 말고 그린에 확실히 올리는 것을 우선하되, 어려우면 어프로치하기 좋은 지역으로 보낸다."},
+ {n:81,c:"e",t:"스코어를 낮추려면",b:"18홀을 3홀씩 6구간으로 나눠 각 구간에 집중한다. 앞 구간을 망쳐도 다음 구간에서 새 마음으로 플레이하며, 스코어카드의 홀별 난이도(핸디캡 1~6은 더블보기, 7~12는 보기, 13~18은 파)를 이용해 공략한다."},
+ {n:82,c:"e",t:"한계를 넘으려면",b:"막연히 '90 깨고 싶다'가 아니라 명확한 게임플랜을 세운다. 성공률 높은 클럽으로 2타를 치고, 난이도 높은 4홀은 더블보기·9홀은 보기·쉬운 5홀은 파로 계산하면 89가 된다. 다 더블보기여도 108이다."},
+ {n:83,c:"e",t:"OB를 내지 않으려면",b:"거리를 내놓고 OB 내는 것이 가장 아쉽다. 볼 뒤에서 목표방향을 정하고 클럽페이스를 직각으로 세트한 뒤 비구선에 스탠스·허리·어깨를 평행하게. 페어웨이가 좁으면 거리보다 방향성을 중시한다."},
+ {n:84,c:"e",t:"첫 티샷 긴장 없애려면",b:"프로도 첫 티샷은 긴장한다. 심호흡·연습스윙·스트레칭으로 육체적 긴장을 풀고, 페어웨이를 넓게 쓸 수 있는 공략법을 택해 목표지점을 좁게 잡지 않는다. 헤드업만 조심하면 의외로 좋은 샷이 나온다."},
+ {n:85,c:"e",t:"긴장을 완화하려면",b:"연습스윙을 실전처럼, 실전을 연습스윙처럼 한다. 300야드 날릴 듯 윙윙거리는 연습스윙은 리듬을 무너뜨리므로, 하체를 견고히 하고 여유있는 스윙으로 상하 출렁임을 없앤다. 인사이드-아웃 궤도라야 거리도 는다."},
+ {n:86,c:"e",t:"3퍼팅 방지하려면",b:"원인만 알면 수정 가능하다. 볼이 잘 굴러갔는데 2퍼팅을 못했다면 스트로크·라인 읽기 문제. 심한 내리막은 한 번에 넣기보다 붙여서 2퍼팅으로 끝내고, 지나친 욕심을 버린다."},
+ {n:87,c:"e",t:"무너진 리듬 되찾으려면",b:"리듬을 잃으면 샷이 무너진다. 무엇보다 릴랙스가 필요하며, 몸이 굳으면 스윙이 안 되므로 어드레스 전 테이크백에 집중해 연습하면 미스 원인을 제거할 수 있다."},
+ {n:88,c:"e",t:"코스에서 기량 발휘",b:"연습장 기량의 80%만 내도 90타는 깬다. 해저드·핀 욕심의 심리적 압박이 스윙을 움츠러들게 하므로, 연습장에서 익힌 탄도를 상상하며 편안한 마음으로 플레이한다."},
+ {n:89,c:"e",t:"장애물을 피해가는 법",b:"충분히 넘길 거리인데 중압감에 장애물에 걸린다. 벙커·해저드 홀은 대개 거리가 짧으니, 티샷 때 거리보다 정확한 낙하지점을 택하고 아예 장애물까지 못 가는 작은 클럽으로 나눠 공략한다."},
+ {n:90,c:"e",t:"파3홀에서의 티샷",b:"대개 거리가 짧아 손해 본다 — 가장 잘 맞은 거리가 아니라 넉넉히 한 클럽 크게 잡는다. 그린이 높으면 볼이 못 미치고 낮으면 지나치기 쉬우며, 맞바람은 한 클럽 길게·뒷바람은 한 클럽 짧게 잡는다."},
+ {n:91,c:"e",t:"구질따라 타수 줄이는 요령",b:"아마추어는 컨디션에 따라 구질이 변한다. 라운드 전 연습장에서 그날의 구질(어느 쪽으로 얼마나 휘는지)을 확인하고, 슬라이스가 나면 페어웨이 왼쪽을 겨냥하는 식으로 대처한다."},
+ {n:92,c:"e",t:"파5홀의 공략법",b:"파5는 3온 2퍼팅 설계다. 거리를 3~4등분해 나눠 공략하며(예: 520야드를 200+160+160), 무리한 2온 욕심이 더블·트리플 보기를 부른다. 미스가 나도 침착하게 다시 거리를 나눈다."},
+ {n:93,c:"e",t:"그린을 직접 공략할때",b:"백스핀으로 세울 기술이 없다면 그린까지 거리·에지에서 핀까지 거리·주변 장애물을 고려해 클럽을 고른다. 벙커에 빠질 것 같으면 아예 짧게 치거나 그린을 넘겨 어프로치를 노린다."},
+ {n:94,c:"e",t:"도그렉홀의 공략법",b:"크게 휘어진 홀은 공략루트를 먼저 세운다. 오른쪽으로 휘고 왼쪽 페어웨이가 넓다면 오른쪽 티에서 대각선으로 보낸다. 지름길로 가는 곳은 반드시 함정이 있으니 자신 있을 때만 모험한다."},
+ {n:95,c:"e",t:"3퍼팅 방지법",b:"원그린은 투그린보다 넓어 핀에 못 붙이면 3퍼팅이 나기 쉽다. 핀 기준 20야드 이내로 붙이도록 하고, 핀이 뒤에 있으면 뒤쪽을 겨냥해 처음부터 3퍼팅을 막는다. 낙하지점을 미리 정한다."},
+ {n:96,c:"e",t:"티샷전 효과적인 연습",b:"스타트 전 샌드웨지 같은 무거운 클럽으로 몸을 풀고, 드라이버로 스피드에 유념해 헤드무게를 느낄 정도로 휘두른다. 마지막 연습샷은 온힘을 다해 쳐 그날의 구질을 파악한다."},
+ {n:97,c:"e",t:"워밍업에서 주의할 점",b:"티업 1시간 전 도착해 준비운동으로 근육 부상을 막는다. 볼 맞추기에만 신경 쓰면 체중이 오른발에 남으니, 스웨이 버릇이 있으면 오른쪽 내리막 라이에서 연습스윙을 몇 번 해 무릎 고정과 체중이동을 익힌다."}
+];
+
+/* ---------------- NAV ---------------- */
+const IC_GRID='<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="6" height="6" rx="1.2"/><rect x="11" y="3" width="6" height="6" rx="1.2"/><rect x="3" y="11" width="6" height="6" rx="1.2"/><rect x="11" y="11" width="6" height="6" rx="1.2"/></svg>';
+const IC_BOOK='<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M10 5.5S8.5 4 5 4v10c3.5 0 5 1.5 5 1.5"/><path d="M10 5.5S11.5 4 15 4v10c-3.5 0-5 1.5-5 1.5"/></svg>';
+const IC_FLAG='<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 3v14"/><path d="M5.5 4h8l-1.8 2.8L13.5 10h-8"/></svg>';
+const NAV=[
+  {group:"개요",icon:IC_GRID,items:[{id:"home",label:"소개"}]},
+  {group:"PART I · 입문",icon:IC_BOOK,items:[
+    {id:"history",label:"골프의 역사"},{id:"course",label:"코스의 구성"},{id:"play",label:"플레이 방법"},
+    {id:"match",label:"경기 방법"},{id:"clubs",label:"골프 용구"},{id:"glossary",label:"골프 용어"},
+    {id:"etiquette",label:"코스 예의"},{id:"swing",label:"스윙 7단계"}]},
+  {group:"PART II · 90타 깨기",icon:IC_FLAG,items:[
+    {id:"tips-a",label:"스윙 기초",cnt:20},{id:"tips-b",label:"비거리",cnt:18},{id:"tips-c",label:"쇼트게임",cnt:20},
+    {id:"tips-d",label:"기술샷",cnt:20},{id:"tips-e",label:"스코어 관리",cnt:19}]}
+];
+const META={home:{crumb:"개요",title:"소개"}};
+NAV.forEach(g=>g.items.forEach(it=>META[it.id]={crumb:g.group,title:it.label}));
+
+/* ---------------- RENDER SIDEBAR ---------------- */
+const tree=document.getElementById('tree');
+tree.innerHTML=NAV.map((g,gi)=>
+  `<div class="tgroup${gi<3?' open':''}" data-g="${gi}">
+     <button class="thead"><span class="gi">${g.icon}</span>${g.group}<span class="chev">▸</span></button>
+     <div class="titems">
+       ${g.items.map(it=>`<a class="tlink" data-view="${it.id}">${it.label}${it.cnt?`<span class="cnt">${it.cnt}</span>`:''}</a>`).join('')}
+     </div>
+   </div>`).join('');
+tree.querySelectorAll('.thead').forEach(h=>h.addEventListener('click',()=>h.closest('.tgroup').classList.toggle('open')));
+
+/* ---------------- RENDER TIP VIEWS ---------------- */
+function tipCard(t){
+  return `<article class="tip" data-c="${t.c}" data-s="${(t.t+' '+t.b).toLowerCase()}">
+     <div class="tip-top"><span class="num">No.${String(t.n).padStart(2,'0')}</span><span class="cat ${CATS[t.c].cls}">${CATS[t.c].name}</span></div>
+     <h4>${t.t}</h4><div class="body">${t.b}</div>
+     <div class="more"><span class="chev">▸</span><span class="mtext">자세히 보기</span></div></article>`;
+}
+Object.keys(CATS).forEach(k=>{
+  const view=document.querySelector(`section[data-view="tips-${k}"]`);
+  const list=TIPS.filter(t=>t.c===k);
+  view.innerHTML=`<div class="vhead"><span class="vtag"><span class="l"></span>PART II · 90타 깨기</span>
+      <h2 class="vtitle">${CATS[k].name}</h2><p class="vlead">${CATS[k].lead}</p></div>
+    <div class="tips-bar"><div class="tips-count"><b>${list.length}</b>개의 비결</div></div>
+    <div class="tips-grid">${list.map(tipCard).join('')}</div>`;
+});
+// tip expand (delegate on content)
+document.getElementById('content').addEventListener('click',e=>{
+  const c=e.target.closest('.tip');if(!c)return;
+  c.classList.toggle('open');
+  c.querySelector('.mtext').textContent=c.classList.contains('open')?'접기':'자세히 보기';
+});
+
+/* ---------------- GLOSSARY ---------------- */
+const gGrid=document.getElementById('glossGrid');
+function renderGloss(list){
+  gGrid.innerHTML=list.length?list.map(t=>
+    `<div class="term"><div class="k">${t.k}<span class="en">${t.en}</span></div><div class="d">${t.d}</div></div>`).join('')
+    :'<div class="no-res">검색 결과가 없습니다.</div>';
+}
+renderGloss(GLOSSARY);
+document.getElementById('glossSearch').addEventListener('input',e=>{
+  const q=e.target.value.trim().toLowerCase();
+  renderGloss(q?GLOSSARY.filter(t=>(t.k+t.en+t.d).toLowerCase().includes(q)):GLOSSARY);
+});
+
+/* ---------------- SWING ---------------- */
+const stepTabs=document.getElementById('stepTabs'),stepPanels=document.getElementById('stepPanels');
+stepTabs.innerHTML=SWING.map((s,i)=>`<button class="step-tab${i===0?' active':''}" data-i="${i}"><span class="num">${s.n}</span>${s.tab}</button>`).join('');
+stepPanels.innerHTML=SWING.map((s,i)=>
+  `<div class="step-panel${i===0?' active':''}" data-i="${i}">
+     <div class="step-visual"><span class="bignum">${s.n}</span><div class="stage">${s.tab}<small>${s.stage}</small></div></div>
+     <div class="step-body"><h3>${s.title}</h3><p>${s.body}</p><ul>${s.li.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+   </div>`).join('');
+stepTabs.addEventListener('click',e=>{
+  const b=e.target.closest('.step-tab');if(!b)return;const i=b.dataset.i;
+  stepTabs.querySelectorAll('.step-tab').forEach(t=>t.classList.toggle('active',t.dataset.i===i));
+  stepPanels.querySelectorAll('.step-panel').forEach(p=>p.classList.toggle('active',p.dataset.i===i));
+});
+
+/* ---------------- ROUTER ---------------- */
+const crumb=document.getElementById('crumb');
+const views=document.querySelectorAll('.view');
+const sidebar=document.getElementById('sidebar'),overlay=document.getElementById('overlay');
+function closeSide(){sidebar.classList.remove('open');overlay.classList.remove('show');}
+function counters(root){
+  root.querySelectorAll('[data-count]').forEach(el=>{
+    const tgt=+el.dataset.count;let s=0;const step=Math.max(1,Math.ceil(tgt/38));
+    const iv=setInterval(()=>{s+=step;if(s>=tgt){s=tgt;clearInterval(iv);}el.textContent=s;},24);
+  });
+}
+function go(id,push){
+  if(!META[id])id='home';
+  views.forEach(v=>v.classList.toggle('active',v.dataset.view===id));
+  tree.querySelectorAll('.tlink').forEach(l=>l.classList.toggle('active',l.dataset.view===id));
+  // open the group containing active link
+  const active=tree.querySelector('.tlink.active');
+  if(active)active.closest('.tgroup').classList.add('open');
+  const m=META[id];
+  crumb.innerHTML=`${m.crumb}<span class="sep">›</span><b>${m.title}</b>`;
+  document.title=`${m.title} — GOLF LESSON`;
+  const cont=document.getElementById('content');cont.scrollTop=0;window.scrollTo({top:0,behavior:'auto'});
+  if(id==='home')counters(document.querySelector('[data-view="home"]'));
+  if(push!==false&&location.hash!=='#'+id)history.pushState({id},'','#'+id);
+  closeSide();
+}
+tree.addEventListener('click',e=>{const l=e.target.closest('.tlink');if(!l)return;go(l.dataset.view);});
+window.addEventListener('popstate',e=>go((location.hash||'#home').slice(1),false));
+
+/* ---------------- SEARCH (global) ---------------- */
+const srResults=document.getElementById('srResults'),srTitle=document.getElementById('srTitle');
+const gInput=document.getElementById('globalSearch');
+function runSearch(q){
+  q=q.trim().toLowerCase();
+  if(!q){go('home');return;}
+  const tipHits=TIPS.filter(t=>(t.t+t.b).toLowerCase().includes(q)).slice(0,24);
+  const glossHits=GLOSSARY.filter(t=>(t.k+t.en+t.d).toLowerCase().includes(q)).slice(0,16);
+  let html='';
+  if(tipHits.length){
+    html+=`<div class="sr-group"><h3>90타 비결 · ${tipHits.length}</h3>`+
+      tipHits.map(t=>`<button class="sr-item" data-goto="tips-${t.c}"><div class="rt">No.${String(t.n).padStart(2,'0')} ${t.t}<span class="badge ${CATS[t.c].cls}">${CATS[t.c].name}</span></div><div class="rd">${t.b.slice(0,64)}…</div></button>`).join('')+`</div>`;
+  }
+  if(glossHits.length){
+    html+=`<div class="sr-group"><h3>용어 · 규칙 · ${glossHits.length}</h3>`+
+      glossHits.map(t=>`<button class="sr-item" data-goto="glossary"><div class="rt">${t.k} <span style="color:var(--gold);font-size:.72rem;font-weight:800">${t.en}</span></div><div class="rd">${t.d}</div></button>`).join('')+`</div>`;
+  }
+  if(!tipHits.length&&!glossHits.length)html=`<p class="sr-empty">'<b>${q}</b>'에 대한 결과가 없습니다. 다른 키워드로 검색해 보세요.</p>`;
+  srTitle.innerHTML=`'${q}' 검색 결과`;
+  srResults.innerHTML=html;
+  views.forEach(v=>v.classList.toggle('active',v.dataset.view==='search'));
+  tree.querySelectorAll('.tlink').forEach(l=>l.classList.remove('active'));
+  crumb.innerHTML=`검색<span class="sep">›</span><b>${q}</b>`;
+}
+let stmr;
+gInput.addEventListener('input',e=>{clearTimeout(stmr);const v=e.target.value;stmr=setTimeout(()=>runSearch(v),160);});
+srResults.addEventListener('click',e=>{
+  const b=e.target.closest('.sr-item');if(!b)return;
+  gInput.value='';go(b.dataset.goto);
+});
+
+/* ---------------- MISC ---------------- */
+document.getElementById('hamb').addEventListener('click',()=>{sidebar.classList.add('open');overlay.classList.add('show');});
+overlay.addEventListener('click',closeSide);
+document.getElementById('randomTip').addEventListener('click',()=>{
+  const t=TIPS[Math.floor(Math.random()*TIPS.length)];
+  go('tips-'+t.c);
+  setTimeout(()=>{
+    const card=[...document.querySelectorAll(`section[data-view="tips-${t.c}"] .tip`)].find(c=>c.querySelector('h4').textContent===t.t);
+    if(card){card.classList.add('open');card.querySelector('.mtext').textContent='접기';
+      card.scrollIntoView({behavior:'smooth',block:'center'});
+      card.style.boxShadow='0 0 0 3px var(--gold)';setTimeout(()=>card.style.boxShadow='',1600);}
+  },120);
+});
+
+/* ---------------- DASHBOARD WIDGETS ---------------- */
+const catColors={a:'#2e5d3f',b:'#b5843a',c:'#3a6b8a',d:'#8a5a3a',e:'#6a4a7a'};
+const dashCats=document.getElementById('dashCats');
+if(dashCats){
+  dashCats.innerHTML=Object.keys(CATS).map(k=>{const cnt=TIPS.filter(t=>t.c===k).length;
+    return `<div class="catrow" data-go="tips-${k}"><span class="dot" style="background:${catColors[k]}"></span>`+
+      `<span class="cn">${CATS[k].name}</span><span class="bar"><i style="width:${Math.round(cnt/20*100)}%;background:${catColors[k]}"></i></span>`+
+      `<span class="cc">${cnt}</span><span class="go">→</span></div>`;}).join('');
+}
+const dashSwingEl=document.getElementById('dashSwing');
+if(dashSwingEl){
+  dashSwingEl.innerHTML=SWING.map(s=>`<div class="swnode" data-go="swing"><div class="sn">${s.n}</div><div class="sl">${s.tab}</div></div>`).join('');
+}
+function renderDashTip(){
+  const el=document.getElementById('dashTip');if(!el)return;
+  const t=TIPS[Math.floor(Math.random()*TIPS.length)];
+  el.innerHTML=`<div class="tnum">No.${String(t.n).padStart(2,'0')}<span class="tbadge" style="background:${catColors[t.c]}">${CATS[t.c].name}</span></div>`+
+    `<h4>${t.t}</h4><p>${t.b}</p><button class="tgo" data-open="${t.n}">이 부문에서 보기 →</button>`;
+}
+renderDashTip();
+const rr=document.getElementById('rerollTip');if(rr)rr.addEventListener('click',renderDashTip);
+const dg=document.getElementById('dashGloss');
+if(dg)dg.addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;const v=dg.value.trim();go('glossary');
+  const gs=document.getElementById('glossSearch');gs.value=v;gs.dispatchEvent(new Event('input'));dg.value='';
+});
+function openTipN(n){
+  const t=TIPS.find(x=>x.n==n);if(!t)return;go('tips-'+t.c);
+  setTimeout(()=>{
+    const card=[...document.querySelectorAll(`section[data-view="tips-${t.c}"] .tip`)].find(c=>c.querySelector('h4').textContent===t.t);
+    if(card){card.classList.add('open');card.querySelector('.mtext').textContent='접기';
+      card.scrollIntoView({behavior:'smooth',block:'center'});
+      card.style.boxShadow='0 0 0 3px var(--gold)';setTimeout(()=>card.style.boxShadow='',1600);}
+  },120);
+}
+/* delegated: data-go / data-open / data-glo */
+document.body.addEventListener('click',e=>{
+  const op=e.target.closest('[data-open]');if(op){openTipN(op.dataset.open);return;}
+  const gl=e.target.closest('[data-glo]');if(gl){go('glossary');
+    const gs=document.getElementById('glossSearch');gs.value=gl.dataset.glo;gs.dispatchEvent(new Event('input'));return;}
+  const g=e.target.closest('[data-go]');if(g){go(g.dataset.go);}
+});
+
+/* init */
+go((location.hash||'#home').slice(1),false);
+</script>
+</body>
+</html>
