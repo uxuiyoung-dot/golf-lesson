@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>GOLF LESSON — 왕초보에서 90타 깨기까지</title>
-<meta name="description" content="골프 입문부터 90타 깨기까지. 두 권의 교재를 하나로 담은 골프 레슨 디자인 시스템." />
+<title>GOLF LESSON</title>
+<meta name="description" content="골프 입문부터 90타까지. 두 권의 교재를 압축한 골프 학습 사이트." />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -416,6 +416,14 @@
     padding:20px;text-align:center;box-shadow:var(--shadow)}
   .fig img{max-width:100%;max-height:380px;border-radius:8px}
   .fig figcaption{margin-top:14px;font-size:.82rem;color:var(--ink-mute);font-weight:600;letter-spacing:-.01em}
+  .grip-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+  .grip-gallery figure{margin:0;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:var(--white);
+    transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s}
+  .grip-gallery figure:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .grip-gallery img{width:100%;height:130px;object-fit:cover;object-position:50% 32%;display:block}
+  .grip-gallery figcaption{padding:11px 13px;font-weight:800;font-size:.88rem;color:var(--green)}
+  .grip-gallery figcaption span{display:block;font-weight:500;font-size:.74rem;color:var(--ink-mute);margin-top:3px;letter-spacing:-.01em}
+  @media(max-width:560px){.grip-gallery{grid-template-columns:1fr}.grip-gallery img{height:180px}}
 </style>
 </head>
 <body>
@@ -424,11 +432,11 @@
 <!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
   <div class="side-search">
-    <div class="box"><span class="ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4"/></svg></span><input id="globalSearch" type="text" placeholder="검색 — 비결, 용어, 규칙" aria-label="검색" /></div>
+    <div class="box"><span class="ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4"/></svg></span><input id="globalSearch" type="text" placeholder="검색어를 입력해주세요." aria-label="검색" /></div>
   </div>
   <nav class="tree" id="tree"></nav>
   <div class="side-foot">
-    <b>GOLF LESSON</b> · Ver 1.0<br>골프교재 1 &amp; 2 아카이브
+    <b>GOLF LESSON</b> · Ver 1.0<br>src. 편한골프세상
   </div>
 </aside>
 
@@ -628,8 +636,16 @@
     <!-- SWING -->
     <section class="view" data-view="swing">
       <div class="vhead"><span class="vtag"><span class="l"></span>PART I · 입문</span><h2 class="vtitle">스윙의 7단계</h2>
-        <p class="vlead">그립에서 피니시까지, 하나의 스윙을 이루는 일곱 개의 순간. 단계를 눌러 각 동작의 핵심을 확인하세요.</p></div>
-      <div class="stepper"><div class="step-tabs" id="stepTabs"></div><div id="stepPanels"></div></div>
+        <p class="vlead">어드레스에서 피니시까지, 하나의 스윙은 끊김 없이 이어지는 7개의 순간입니다. 단계를 눌러 상세 설명을 확인하세요.</p></div>
+      <div class="swing-band"><div class="swing-track" id="swingTrack"></div></div>
+      <div class="swing-detail" id="swingDetail"></div>
+      <h3 class="vsub">그립 3가지</h3>
+      <p class="vp">클럽과 골퍼를 잇는 유일한 접점. 자신에게 맞는 그립을 선택하세요.</p>
+      <div class="grip-gallery">
+        <figure><img loading="lazy" src="images/grip-baseball.jpg" alt="베이스볼 그립"><figcaption>베이스볼 그립<span>손목이 약한 골퍼·어린이 (투 핸드)</span></figcaption></figure>
+        <figure><img loading="lazy" src="images/grip-overlapping.jpg" alt="오버래핑 그립"><figcaption>오버래핑 그립<span>가장 널리 쓰이는 그립</span></figcaption></figure>
+        <figure><img loading="lazy" src="images/grip-interlocking.jpg" alt="인터로킹 그립"><figcaption>인터로킹 그립<span>손가락이 작거나 여성이 선호</span></figcaption></figure>
+      </div>
     </section>
 
     <!-- TIPS A~E -->
@@ -721,7 +737,7 @@ const CATS={a:{name:"스윙 기초",cls:"cat-a",lead:"헤드업·오버스윙·�
   e:{name:"스코어 관리",cls:"cat-e",lead:"코스 공략과 멘탈로 90타를 깨는 19가지 전략."}};
 
 const SWING_IMG=['swing-grip.jpg','swing-stance.jpg','swing-address.jpg','swing-backswing.jpg','swing-top.jpg','swing-downswing.jpg','swing-finish.jpg'];
-const TIP_IMG={1:'tip-01.jpg',2:'tip-02.jpg',3:'tip-03.jpg',4:'tip-04.jpg',5:'tip-05.jpg',6:'tip-06.jpg',7:'tip-07.jpg',8:'tip-08.jpg',9:'tip-09.png',10:'tip-10.jpg',11:'tip-11.jpg',12:'tip-12.jpg',13:'tip-13.jpg',14:'tip-14.jpg',15:'tip-15.jpg',16:'tip-16.jpg',17:'tip-17.jpg',18:'tip-18.png',19:'tip-19.jpg',20:'tip-20.png',21:'tip-21.png',22:'tip-22.jpg',24:'tip-24.png',25:'tip-25.png',27:'tip-27.jpg',28:'tip-28.jpg',29:'tip-29.jpg',30:'tip-30.jpg',31:'tip-31.jpg',32:'tip-32.jpg',33:'tip-33.jpg',34:'tip-34.png',35:'tip-35.jpg',36:'tip-36.png',37:'tip-37.png',38:'tip-38.png',39:'tip-39.jpg',40:'tip-40.png',41:'tip-41.png',42:'tip-42.jpg',43:'tip-43.jpg',45:'tip-45.jpg',47:'tip-47.png',48:'tip-48.jpg',49:'tip-49.jpg',50:'tip-50.jpg',51:'tip-51.jpg',52:'tip-52.jpg',53:'tip-53.jpg',54:'tip-54.jpg',55:'tip-55.jpg',56:'tip-56.jpg',57:'tip-57.jpg',58:'tip-58.jpg',59:'tip-59.jpg',60:'tip-60.jpg',62:'tip-62.jpg',63:'tip-63.jpg',65:'tip-65.jpg',66:'tip-66.jpg',67:'tip-67.jpg',68:'tip-68.jpg',69:'tip-69.jpg',70:'tip-70.jpg',71:'tip-71.jpg',72:'tip-72.jpg',73:'tip-73.png',74:'tip-74.png',75:'tip-75.png',76:'tip-76.jpg',77:'tip-77.jpg',78:'tip-78.png',79:'tip-79.jpg',80:'tip-80.jpg',81:'tip-81.jpg',82:'tip-82.jpg',83:'tip-83.jpg',84:'tip-84.jpg',85:'tip-85.jpg',86:'tip-86.jpg',87:'tip-87.jpg',88:'tip-88.png',89:'tip-89.jpg',90:'tip-90.jpg',92:'tip-92.jpg',93:'tip-93.jpg',94:'tip-94.jpg',95:'tip-95.jpg',96:'tip-96.jpg',97:'tip-97.jpg'};
+const TIP_IMG={1:'tip-01.jpg',2:'tip-02.jpg',3:'tip-03.jpg',4:'tip-04.jpg',5:'tip-05.jpg',6:'tip-06.jpg',7:'tip-07.jpg',8:'tip-08.jpg',9:'tip-09.png',10:'tip-10.jpg',11:'tip-11.jpg',12:'tip-12.jpg',13:'tip-13.jpg',14:'tip-14.jpg',15:'tip-15.jpg',16:'tip-16.jpg',17:'tip-17.jpg',18:'tip-18.png',19:'tip-19.jpg',20:'tip-20.png',21:'tip-21.png',22:'tip-22.jpg',24:'tip-24.png',26:'tip-26.png',27:'tip-27.jpg',28:'tip-28.jpg',29:'tip-29.jpg',30:'tip-30.jpg',31:'tip-31.jpg',32:'tip-32.jpg',33:'tip-33.jpg',34:'tip-34.png',35:'tip-35.jpg',36:'tip-36.png',37:'tip-37.png',38:'tip-38.png',39:'tip-39.jpg',40:'tip-40.png',41:'tip-41.png',42:'tip-42.jpg',43:'tip-43.jpg',46:'tip-46.jpg',47:'tip-47.png',48:'tip-48.jpg',49:'tip-49.jpg',50:'tip-50.jpg',51:'tip-51.jpg',52:'tip-52.jpg',53:'tip-53.jpg',54:'tip-54.jpg',55:'tip-55.jpg',56:'tip-56.jpg',57:'tip-57.jpg',58:'tip-58.jpg',59:'tip-59.jpg',61:'tip-61.jpg',62:'tip-62.jpg',63:'tip-63.jpg',65:'tip-65.jpg',66:'tip-66.jpg',67:'tip-67.jpg',68:'tip-68.jpg',69:'tip-69.jpg',70:'tip-70.jpg',71:'tip-71.jpg',72:'tip-72.jpg',73:'tip-73.png',74:'tip-74.png',75:'tip-75.png',76:'tip-76.jpg',77:'tip-77.jpg',78:'tip-78.png',79:'tip-79.jpg',80:'tip-80.jpg',81:'tip-81.jpg',82:'tip-82.jpg',83:'tip-83.jpg',84:'tip-84.jpg',85:'tip-85.jpg',86:'tip-86.jpg',87:'tip-87.jpg',88:'tip-88.png',89:'tip-89.jpg',91:'tip-91.jpg',92:'tip-92.jpg',93:'tip-93.jpg',94:'tip-94.jpg',95:'tip-95.jpg',96:'tip-96.jpg',97:'tip-97.jpg'};
 const TIPS=[
  {n:1,c:"a",t:"헤드업 예방법",b:"매트에 분필로 동그라미를 그리고 볼을 올린 뒤, 임팩트 직후 표식을 눈으로 확인한다는 의식으로 반복한다. 날아가는 볼을 보려 하면 자세가 흐트러지므로 볼 아래 표식을 끝까지 본다."},
  {n:2,c:"a",t:"오버 스윙의 교정",b:"톱에서 왼손 엄지가 샤프트를 받치면 오버스윙을 막는다. 백스윙 때 무릎 각도·방향이 흔들리지 않아야 하며, 오른쪽 스웨이나 과도한 코킹, 왼팔을 굽히는 것이 원인이다."},
@@ -887,19 +903,29 @@ document.getElementById('glossSearch').addEventListener('input',e=>{
   renderGloss(q?GLOSSARY.filter(t=>(t.k+t.en+t.d).toLowerCase().includes(q)):GLOSSARY);
 });
 
-/* ---------------- SWING ---------------- */
-const stepTabs=document.getElementById('stepTabs'),stepPanels=document.getElementById('stepPanels');
-stepTabs.innerHTML=SWING.map((s,i)=>`<button class="step-tab${i===0?' active':''}" data-i="${i}"><span class="num">${s.n}</span>${s.tab}</button>`).join('');
-stepPanels.innerHTML=SWING.map((s,i)=>
-  `<div class="step-panel${i===0?' active':''}" data-i="${i}">
-     <div class="step-visual"><img class="sv-img" loading="lazy" src="images/${SWING_IMG[i]}" alt="${s.tab} 자세"><span class="bignum">${s.n}</span><div class="stage">${s.tab}<small>${s.stage}</small></div></div>
-     <div class="step-body"><h3>${s.title}</h3><p>${s.body}</p><ul>${s.li.map(x=>`<li>${x}</li>`).join('')}</ul></div>
-   </div>`).join('');
-stepTabs.addEventListener('click',e=>{
-  const b=e.target.closest('.step-tab');if(!b)return;const i=b.dataset.i;
-  stepTabs.querySelectorAll('.step-tab').forEach(t=>t.classList.toggle('active',t.dataset.i===i));
-  stepPanels.querySelectorAll('.step-panel').forEach(p=>p.classList.toggle('active',p.dataset.i===i));
-});
+/* ---------------- SWING (7-stage timeline) ---------------- */
+const SW7=[
+  {n:1,kr:"어드레스",en:"Address",d:"편안한 자세로 목표를 설정합니다.",detail:"몸의 모든 근육이 스윙을 함께 시작할 준비를 하는 자세입니다. 클럽 페이스를 목표선과 스퀘어하게 놓고, 발·무릎·엉덩이·어깨가 목표선과 평행을 이루게 합니다. 클럽헤드는 지면에서 살짝 띄워 무게를 느낍니다."},
+  {n:2,kr:"테이크어웨이",en:"Takeaway",d:"클럽을 부드럽게 뒤로 가져갑니다.",detail:"몸을 고정한 채 손과 팔이 먼저 움직여 클럽을 뒤로 가져갑니다. 헤드를 땅에 가깝게 끌면 왼 어깨가 낮아져 무너지므로, 왼손·왼팔 주도로 낮고 넓게 시작합니다."},
+  {n:3,kr:"백스윙",en:"Backswing",d:"상체와 하체의 회전으로 클럽을 들어 올립니다.",detail:"하반신을 고정하고 상체를 오른쪽으로 감아(코일링) 올립니다. 오른 허벅지 안쪽에 긴장이 느껴질 때가 충분히 꼬인 상태이며, 이 상하체 꼬임의 차이가 거리의 원천이 됩니다."},
+  {n:4,kr:"탑",en:"Top",d:"스윙의 가장 높은 지점, 힘을 모읍니다.",detail:"어깨는 약 90도(아마추어는 70~80도도 훌륭), 히프는 45도 회전합니다. 왼 어깨가 처지지 않고 손목이 약 30도 굽혀져야 블레이드 각이 올바르며, 이 상태에서 다운스윙하면 임팩트 때 자동으로 스퀘어가 됩니다."},
+  {n:5,kr:"다운스윙",en:"Downswing",d:"하체 리드로 클럽을 내려옵니다.",detail:"전환은 하체부터 시작합니다(왼발 안쪽으로 디딤). 히프로 시작한다는 통설과 달리 왼손·왼팔을 공 쪽으로 프리 스윙하는 것이 기초이며, 느릴수록 릴리이스 타이밍이 정확해져 힘이 커집니다."},
+  {n:6,kr:"임팩트",en:"Impact",d:"정확한 임팩트로 공을 타격합니다.",detail:"임팩트의 성패는 폴로스루로 평가됩니다. 임팩트에만 집착하지 말고 목표선을 향해 헤드를 뿌려주며, 어드레스 때의 스퀘어 페이스로 정확히 볼을 맞힙니다."},
+  {n:7,kr:"피니시",en:"Finish",d:"균형 있게 마무리하며 스윙을 완성합니다.",detail:"풀스윙으로 온 몸을 균형 있게 사용해 최대 헤드 스피드를 냅니다. 오른발 뒤꿈치를 들어 발바닥이 다 보일 정도로, 엉덩이와 어깨는 척추 주위로 회전해 목표 방향을 향합니다."}
+];
+const swTrack=document.getElementById('swingTrack'),swDetail=document.getElementById('swingDetail');
+swTrack.innerHTML=SW7.map((s,i)=>
+  `<button class="sw-col${i===0?' active':''}" data-i="${i}">
+     <span class="n">${s.n}</span><span class="kr">${s.kr}</span><span class="en">${s.en}</span>
+     <span class="d">${s.d}</span><span class="line"></span>
+   </button>`).join('');
+function swShow(i){
+  const s=SW7[i];
+  swTrack.querySelectorAll('.sw-col').forEach(c=>c.classList.toggle('active',+c.dataset.i===i));
+  swDetail.innerHTML=`<div class="sd-tag">STEP ${s.n} · ${s.en}</div><h3>${s.kr}</h3><p>${s.detail}</p>`;
+}
+swTrack.addEventListener('click',e=>{const b=e.target.closest('.sw-col');if(b)swShow(+b.dataset.i);});
+swShow(0);
 
 /* ---------------- ROUTER ---------------- */
 const crumb=document.getElementById('crumb');
