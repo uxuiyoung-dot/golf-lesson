@@ -7,27 +7,32 @@
 <meta name="description" content="골프 입문부터 90타 깨기까지. 두 권의 교재를 하나로 담은 골프 레슨 디자인 시스템." />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" />
 <style>
   :root{
-    --green-900:#0e2419;
-    --green:#1b3a2b;
-    --green-600:#2e5d3f;
-    --green-500:#3a7150;
-    --green-tint:#eef2ec;
-    --green-tint2:#e3ebe2;
-    --gold:#c6a15b;
-    --gold-soft:#d9bd86;
-    --paper:#f7f5ef;
-    --side:#fbfaf5;
-    --ink:#17201a;
-    --ink-soft:#525a52;
-    --ink-mute:#8a9088;
-    --line:rgba(23,32,26,.12);
-    --line-soft:rgba(23,32,26,.07);
-    --white:#ffffff;
-    --shadow:0 18px 50px -26px rgba(14,36,25,.4);
+    /* Velvety — sage · cream · clay */
+    --green-900:#28311f;   /* deepest forest (hero base) */
+    --green:#3b4632;       /* deep sage-forest (primary dark) */
+    --green-600:#5b6a49;   /* mid sage */
+    --green-500:#7c8a63;   /* sage accent */
+    --green-tint:#ecefe2;  /* light sage wash */
+    --green-tint2:#e0e5d2; /* sage tint */
+    --gold:#b0805f;        /* warm clay accent */
+    --gold-soft:#d0aa86;   /* soft clay / sand */
+    --paper:#f4efe3;       /* warm cream base */
+    --side:#f9f5ea;        /* lighter cream (sidebar) */
+    --ink:#2f2b24;         /* warm charcoal */
+    --ink-soft:#6b6559;
+    --ink-mute:#9c9484;
+    --line:rgba(47,43,36,.13);
+    --line-soft:rgba(47,43,36,.06);
+    --white:#fffdf7;       /* warm card white */
+    --shadow:0 22px 54px -30px rgba(47,43,36,.34);
     --font:'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', sans-serif;
-    --sbw:270px;
+    --serif:'Cormorant Garamond', 'Noto Serif KR', Georgia, 'Apple SD Gothic Neo', serif;
+    --sbw:274px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -53,7 +58,7 @@
   .side-search{padding:4px 18px 14px}
   .side-search .box{display:flex;align-items:center;gap:9px;background:var(--white);border:1px solid var(--line);
     border-radius:10px;padding:10px 13px;transition:border-color .25s,box-shadow .25s}
-  .side-search .box:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px rgba(198,161,91,.16)}
+  .side-search .box:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px rgba(176,128,95,.16)}
   .side-search input{border:none;outline:none;background:none;font-family:inherit;font-size:.86rem;width:100%;color:var(--ink)}
   .side-search .ic{opacity:.45;font-size:.9rem}
   .tree{flex:1;overflow-y:auto;padding:6px 12px 20px}
@@ -114,8 +119,8 @@
   /* ---------- HOME ---------- */
   .hero{position:relative;overflow:hidden;border-radius:22px;padding:clamp(34px,5vw,60px);color:var(--paper);
     background:radial-gradient(120% 120% at 82% -20%,rgba(58,113,80,.6),transparent 58%),
-      radial-gradient(90% 80% at 6% 120%,rgba(198,161,91,.18),transparent 55%),
-      linear-gradient(155deg,var(--green-900),var(--green) 58%,#12301f);}
+      radial-gradient(90% 80% at 6% 120%,rgba(176,128,95,.18),transparent 55%),
+      linear-gradient(155deg,var(--green-900),var(--green) 58%,#333f2a);}
   .hero .grain{position:absolute;inset:0;opacity:.5;pointer-events:none;
     background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:3px 3px}
   .hero .ball{position:absolute;right:-6%;top:50%;transform:translateY(-50%);width:min(38%,340px);aspect-ratio:1;border-radius:50%;
@@ -144,7 +149,7 @@
   .entry-row{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
   .entry{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:18px;padding:28px;cursor:pointer;
     background:var(--white);transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s,border-color .3s;text-align:left}
-  .entry:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:rgba(198,161,91,.5)}
+  .entry:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:rgba(176,128,95,.5)}
   .entry .ico{width:52px;height:52px;border-radius:13px;display:grid;place-items:center;font-size:1.5rem;margin-bottom:18px;
     background:var(--green-tint)}
   .entry h3{font-size:1.2rem;font-weight:800;letter-spacing:-.02em}
@@ -159,7 +164,7 @@
   .g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
   .card{background:var(--white);border:1px solid var(--line);border-radius:15px;padding:24px;position:relative;
     transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s,border-color .3s}
-  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:rgba(198,161,91,.45)}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:rgba(176,128,95,.45)}
   .card .kn{font-size:.68rem;font-weight:800;letter-spacing:.12em;color:var(--gold);text-transform:uppercase}
   .card h4{font-size:1.1rem;font-weight:800;margin:9px 0 7px;letter-spacing:-.02em}
   .card p{font-size:.9rem;color:var(--ink-soft);font-weight:500}
@@ -176,8 +181,8 @@
   .par .big{font-size:2.3rem;font-weight:900;color:var(--green);letter-spacing:-.03em;margin:5px 0}
   .par .dist{font-size:.86rem;color:var(--ink-soft);font-weight:700}
   .par .desc{font-size:.84rem;color:var(--ink-soft);margin-top:10px}
-  .formula{margin-top:26px;padding:22px 26px;border:1px dashed rgba(198,161,91,.6);border-radius:15px;
-    background:rgba(198,161,91,.08);font-weight:700;color:var(--green);font-size:1rem;text-align:center}
+  .formula{margin-top:26px;padding:22px 26px;border:1px dashed rgba(176,128,95,.6);border-radius:15px;
+    background:rgba(176,128,95,.08);font-weight:700;color:var(--green);font-size:1rem;text-align:center}
   .formula b{color:var(--gold);font-weight:900}
 
   /* clubs */
@@ -203,7 +208,7 @@
   .gloss-search{margin-top:26px;max-width:520px}
   .isearch{display:flex;align-items:center;gap:10px;background:var(--white);border:1px solid var(--line);border-radius:99px;
     padding:12px 20px;transition:border-color .25s,box-shadow .25s}
-  .isearch:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px rgba(198,161,91,.16)}
+  .isearch:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px rgba(176,128,95,.16)}
   .isearch input{border:none;outline:none;background:none;font-family:inherit;font-size:.94rem;width:100%;color:var(--ink)}
   .isearch .ic{opacity:.45}
   .gloss-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);
@@ -218,7 +223,7 @@
   /* etiquette */
   .etq{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:26px}
   .etq .card h4{display:flex;align-items:center;gap:10px}
-  .etq .card h4 .qn{width:28px;height:28px;border-radius:8px;background:rgba(198,161,91,.18);color:var(--gold);
+  .etq .card h4 .qn{width:28px;height:28px;border-radius:8px;background:rgba(176,128,95,.18);color:var(--gold);
     display:grid;place-items:center;font-size:.8rem;font-weight:800;flex:none}
 
   /* swing stepper */
@@ -234,9 +239,9 @@
   .step-panel{display:none}
   .step-panel.active{display:grid;grid-template-columns:.9fr 1.1fr;gap:36px;align-items:center;animation:fade .45s ease}
   .step-visual{aspect-ratio:4/3;border-radius:16px;position:relative;overflow:hidden;
-    background:radial-gradient(120% 120% at 70% 10%,rgba(198,161,91,.25),transparent 55%),linear-gradient(155deg,#12301f,#0e2419);
+    background:radial-gradient(120% 120% at 70% 10%,rgba(176,128,95,.25),transparent 55%),linear-gradient(155deg,#333f2a,#28311f);
     display:grid;place-items:center}
-  .step-visual .bignum{font-size:8rem;font-weight:900;color:rgba(198,161,91,.16);position:absolute;right:14px;bottom:-12px}
+  .step-visual .bignum{font-size:8rem;font-weight:900;color:rgba(176,128,95,.16);position:absolute;right:14px;bottom:-12px}
   .step-visual .stage{font-size:1.4rem;font-weight:900;color:var(--gold-soft);z-index:2;text-align:center}
   .step-visual .stage small{display:block;font-size:.72rem;letter-spacing:.2em;color:rgba(247,245,239,.5);
     text-transform:uppercase;margin-top:7px;font-weight:600}
@@ -253,7 +258,7 @@
   .tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
   .tip{background:var(--white);border:1px solid var(--line);border-radius:15px;padding:24px;cursor:pointer;
     transition:transform .42s cubic-bezier(.16,1,.3,1),box-shadow .42s,border-color .3s;display:flex;flex-direction:column}
-  .tip:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:rgba(198,161,91,.45)}
+  .tip:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:rgba(176,128,95,.45)}
   .tip.hide{display:none}
   .tip-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
   .tip .num{font-size:.86rem;font-weight:900;color:var(--gold);font-variant-numeric:tabular-nums}
@@ -265,7 +270,7 @@
   .tip .more{margin-top:auto;padding-top:15px;font-size:.76rem;font-weight:800;color:var(--gold);display:flex;align-items:center;gap:6px}
   .tip .more .chev{transition:transform .38s}
   .tip.open .more .chev{transform:rotate(90deg)}
-  .cat-a{background:#2e5d3f}.cat-b{background:#b5843a}.cat-c{background:#3a6b8a}.cat-d{background:#8a5a3a}.cat-e{background:#6a4a7a}
+  .cat-a{background:#5b6a49}.cat-b{background:#a97b56}.cat-c{background:#6d8081}.cat-d{background:#8a6f57}.cat-e{background:#7a6a80}
 
   /* search results */
   .sr-group{margin-top:30px}
@@ -300,7 +305,7 @@
   .hero-quick button:hover{background:var(--gold);color:var(--green-900);border-color:var(--gold)}
 
   .w.kpi{grid-column:span 3;min-height:120px;justify-content:space-between}
-  .w.kpi:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:rgba(198,161,91,.4)}
+  .w.kpi:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:rgba(176,128,95,.4)}
   .w.kpi .n{font-size:2.3rem;font-weight:900;color:var(--green);line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
   .w.kpi .n span{color:var(--gold);font-size:.5em;margin-left:2px}
   .w.kpi .t{font-size:.82rem;color:var(--ink-soft);font-weight:700;margin-top:8px}
@@ -317,7 +322,7 @@
   .catrow:hover .cn{color:var(--green)}
   .catrow:hover .go{transform:translateX(3px);color:var(--gold)}
 
-  .tip-w{background:linear-gradient(160deg,#12301f,#0e2419);border-color:transparent;color:var(--paper)}
+  .tip-w{background:linear-gradient(160deg,#333f2a,#28311f);border-color:transparent;color:var(--paper)}
   .tip-w .w-head h3{color:#fff}
   .tip-w .reroll{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:var(--gold-soft);
     width:32px;height:32px;border-radius:9px;cursor:pointer;font-size:.95rem;transition:all .25s}
@@ -382,6 +387,20 @@
     .top-cta{display:none}
   }
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  /* ---------- Velvety: serif display & soft texture ---------- */
+  .hero h1{font-family:var(--serif);font-weight:600;letter-spacing:.005em}
+  .hero h1 em{font-style:italic;font-weight:500}
+  .vtitle,.vsub,.sec-title,.step-body h3,.entry h3{font-family:var(--serif);font-weight:600;letter-spacing:.006em}
+  .w.kpi .n,.par .big,.step-visual .stage,.ml .mv,.stat .n{font-family:var(--serif);font-weight:600}
+  .side-head .tt{font-family:var(--serif);font-weight:600;font-size:1.16rem;letter-spacing:.01em}
+  .vlead,.hero p{font-weight:400}
+  .card{border-radius:18px}
+  .tip,.w,.par,.club,.entry{border-radius:20px}
+  .hero,.hero-span{border-radius:26px}
+  body{background:
+    radial-gradient(1100px 560px at 100% -6%, rgba(124,138,99,.08), transparent 62%),
+    radial-gradient(900px 500px at -5% 108%, rgba(176,128,95,.06), transparent 60%),
+    var(--paper);background-attachment:fixed}
 </style>
 </head>
 <body>
@@ -481,12 +500,12 @@
         <div class="w span6">
           <div class="w-head"><h3>스코어 한눈에</h3><button class="act" data-go="glossary">용어 →</button></div>
           <div class="mini-ladder">
-            <div class="ml" style="background:#8a3a3a"><div class="mn">더블보기</div><div class="mv">+2</div></div>
-            <div class="ml" style="background:#a5603a"><div class="mn">보기</div><div class="mv">+1</div></div>
-            <div class="ml" style="background:#5a6a4a"><div class="mn">파</div><div class="mv">0</div></div>
-            <div class="ml" style="background:#3a6b8a"><div class="mn">버디</div><div class="mv">−1</div></div>
-            <div class="ml" style="background:#2e5d3f"><div class="mn">이글</div><div class="mv">−2</div></div>
-            <div class="ml" style="background:#c6a15b;color:#0e2419"><div class="mn">더블이글</div><div class="mv">−3</div></div>
+            <div class="ml" style="background:#a56a52"><div class="mn">더블보기</div><div class="mv">+2</div></div>
+            <div class="ml" style="background:#b98a63"><div class="mn">보기</div><div class="mv">+1</div></div>
+            <div class="ml" style="background:#8a8b6f"><div class="mn">파</div><div class="mv">0</div></div>
+            <div class="ml" style="background:#6f8060"><div class="mn">버디</div><div class="mv">−1</div></div>
+            <div class="ml" style="background:#57684a"><div class="mn">이글</div><div class="mv">−2</div></div>
+            <div class="ml" style="background:#b0805f;color:#28311f"><div class="mn">더블이글</div><div class="mv">−3</div></div>
           </div>
         </div>
       </div>
@@ -568,12 +587,12 @@
       <div class="vhead"><span class="vtag"><span class="l"></span>PART I · 입문</span><h2 class="vtitle">골프 용어 사전</h2>
         <p class="vlead">기준타수(파)를 중심으로 한 타 한 타의 이름들. 그리고 코스에서 마주치는 필수 용어와 규칙 정의를 검색해 찾아보세요.</p></div>
       <div class="ladder">
-        <div class="step" style="background:#8a3a3a"><div class="s">DOUBLE BOGEY</div><div class="name">더블보기</div><div class="v">+2</div></div>
-        <div class="step" style="background:#a5603a"><div class="s">BOGEY</div><div class="name">보기</div><div class="v">+1</div></div>
-        <div class="step" style="background:#5a6a4a"><div class="s">PAR</div><div class="name">파</div><div class="v">0</div></div>
-        <div class="step" style="background:#3a6b8a"><div class="s">BIRDIE</div><div class="name">버디</div><div class="v">−1</div></div>
-        <div class="step" style="background:#2e5d3f"><div class="s">EAGLE</div><div class="name">이글</div><div class="v">−2</div></div>
-        <div class="step" style="background:#c6a15b;color:#0e2419"><div class="s">DBL EAGLE</div><div class="name">더블이글</div><div class="v">−3</div></div>
+        <div class="step" style="background:#a56a52"><div class="s">DOUBLE BOGEY</div><div class="name">더블보기</div><div class="v">+2</div></div>
+        <div class="step" style="background:#b98a63"><div class="s">BOGEY</div><div class="name">보기</div><div class="v">+1</div></div>
+        <div class="step" style="background:#8a8b6f"><div class="s">PAR</div><div class="name">파</div><div class="v">0</div></div>
+        <div class="step" style="background:#6f8060"><div class="s">BIRDIE</div><div class="name">버디</div><div class="v">−1</div></div>
+        <div class="step" style="background:#57684a"><div class="s">EAGLE</div><div class="name">이글</div><div class="v">−2</div></div>
+        <div class="step" style="background:#b0805f;color:#28311f"><div class="s">DBL EAGLE</div><div class="name">더블이글</div><div class="v">−3</div></div>
       </div>
       <div class="gloss-search"><label class="isearch"><span class="ic"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4"/></svg></span><input id="glossSearch" type="text" placeholder="용어 검색 — 예: 그립, 드롭, 홀인원, OB" aria-label="용어 검색" /></label></div>
       <div class="gloss-grid" id="glossGrid"></div>
@@ -940,7 +959,7 @@ document.getElementById('randomTip').addEventListener('click',()=>{
 });
 
 /* ---------------- DASHBOARD WIDGETS ---------------- */
-const catColors={a:'#2e5d3f',b:'#b5843a',c:'#3a6b8a',d:'#8a5a3a',e:'#6a4a7a'};
+const catColors={a:'#5b6a49',b:'#a97b56',c:'#6d8081',d:'#8a6f57',e:'#7a6a80'};
 const dashCats=document.getElementById('dashCats');
 if(dashCats){
   dashCats.innerHTML=Object.keys(CATS).map(k=>{const cnt=TIPS.filter(t=>t.c===k).length;
